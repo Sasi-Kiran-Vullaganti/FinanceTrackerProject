@@ -1,0 +1,126 @@
+{% extends 'base.html' %}
+
+{% block title %}Register{% endblock %}
+
+{% block extra_css %}
+<style>
+    .titleHeading1{
+        font-size: 36px;
+        font-weight: bold;
+    }
+    .subHeading1{
+        font-size: 18px;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 d-flex align-items-center justify-content-center">
+        </div>
+
+        <div class="col-md-6 d-flex align-items-center justify-content-center mt-5">
+            <div class="w-100">
+                <p class="titleHeading1">Every Penny Counts – Keep Your Finances in Check</p>
+                <p class="subHeading1">Welcome to Finance Tracker, Become a Member</p>
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        <div class="row">
+                            <!-- Name -->
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="name" class="form-label">Full Name</label>
+                                    <input type="text" class="form-control" id="name" name="name" placeholder="Enter your full name">
+                                </div>
+                            </div>
+                
+                            <!-- Email -->
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="email" class="form-label">Email Address</label>
+                                    <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com">
+                                    <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                                </div>
+                            </div>
+                        </div>
+                
+                        <div class="row">
+                            <!-- Phone -->
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="phone" class="form-label">Phone Number</label>
+                                    <input type="tel" class="form-control" id="phone" name="phone" placeholder="Enter your phone number">
+                                </div>
+                            </div>
+                
+                            <!-- Password -->
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="password" class="form-label">Password</label>
+                                    <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password">
+                                </div>
+                            </div>
+                        </div>
+                
+                        <div class="row">
+                            <!-- Gender -->
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Gender</label>
+                                    <div class="d-flex gap-3">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="gender" id="male" value="M">
+                                            <label class="form-check-label" for="male">Male</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="gender" id="female" value="F">
+                                            <label class="form-check-label" for="female">Female</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                
+                            <!-- Currency -->
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="currency" class="form-label">Preferred Currency</label>
+                                    <div class="d-flex gap-3">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="currency" id="USD" value="USD">
+                                            <label class="form-check-label" for="USD">USD</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="currency" id="INR" value="INR">
+                                            <label class="form-check-label" for="INR">INR</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-12 text-center">
+                                <button type="submit" class="btn btn-primary mt-3" style="width: 50%;">Register</button>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row mb-3">
+                            <div class="col-12 text-center mt-2">
+                                <span class="txt-center">- Already a Member? - <a href="">Login now</a></span>
+                            </div>
+                        </div>
+                    </form>
+                                  
+            </div>
+        </div>            
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    console.log('user login scripts added')
+</script>
+{% endblock %}

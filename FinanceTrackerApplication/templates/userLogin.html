@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block extra_css %}
+<style>
+    .titleHeading1{
+        font-size: 36px;
+        font-weight: bold;
+    }
+    .subHeading1{
+        font-size: 18px;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6"></div>
+        <div class="col-md-6 d-flex align-items-center justify-content-center mt-5">
+            <div class="w-75">
+                <p class="titleHeading1">Know Where Your Money Goes, Take Charge Today!</p>
+                <p class="subHeading1">Welcome back! Please login to your account.</p>
+                <form action="{% url 'userLogin' %}" method="post">
+                    {% csrf_token %}
+                    <div class="form-floating mb-3">
+                        <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com" required>
+                        <label for="email">Email address</label>
+                    </div>
+                    <div class="form-floating">
+                        <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+                        <label for="password">Password</label>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center mt-3">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="rememberMe" name="rememberMe">
+                            <label class="form-check-label" for="rememberMe">
+                                Remember Me
+                            </label>
+                        </div>
+                        <a href="#" class="text-decoration-none">Forgot Password?</a>
+                    </div>
+                    <!-- Buttons Row -->
+                    <div class="mt-3 d-flex gap-2">
+                        <button type="submit" class="btn btn-primary" style="width: 130px; height: 55px;">Login</button>
+                        <a href="register.html" class="btn btn-secondary" style="width: 130px; height: 55px;">Register</a>
+                    </div>
+                </form>
+            </div>
+        </div>            
+    </div>
+</div>
+
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    console.log('user login scripts added')
+</script>
+{% endblock %}
