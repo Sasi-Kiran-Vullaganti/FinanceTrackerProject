@@ -1,0 +1,235 @@
+{% extends 'base.html' %}
+
+{% block title %}Transaction Dashboard{% endblock %}
+
+{% block extra_css %}
+<style>
+</style>
+{% endblock %}
+
+{% block content %}
+
+
+<div class="container">
+    <h1>Add new transaction</h1>
+    <form action="" method="post" class="container">
+        {% csrf_token %}
+        <div class="row g-3 align-items-center mt-3">
+    
+            <!-- Transaction Name -->
+            <div class="col-md-3 mb-3">
+                <label for="transaction_name" class="form-label">Transaction Name</label>
+                <input type="text" class="form-control" id="transaction_name" name="transaction_name" required>
+            </div>
+    
+            <!-- Transaction Type (Radio Buttons) -->
+            <div class="col-md-3 mb-3">
+                <label class="form-label">Transaction Type</label>
+                <div class="d-flex">
+                    <div class="form-check me-3">
+                        <input type="radio" class="form-check-input" id="income" name="transaction_type" value="income" required>
+                        <label class="form-check-label" for="income">Income</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" id="expense" name="transaction_type" value="expense">
+                        <label class="form-check-label" for="expense">Expense</label>
+                    </div>
+                </div>
+            </div>
+    
+            <!-- Transaction Amount -->
+            <div class="col-md-3 mb-3">
+                <label for="transaction_amount" class="form-label">Transaction Amount</label>
+                <input type="number" class="form-control" id="transaction_amount" name="transaction_amount" required min="0.01" step="0.01">
+            </div>
+    
+            <!-- Transaction Date -->
+            <div class="col-md-3 mb-3">
+                <label for="transaction_date" class="form-label">Transaction Date</label>
+                <input type="date" class="form-control" id="transaction_date" name="transaction_date" required>
+            </div>
+    
+            <!-- Transaction Category -->
+            <div class="col-md-3 mb-3">
+                <label for="transaction_category" class="form-label">Transaction Category</label>
+                <select class="form-select" id="transaction_category" name="transaction_category" required>
+                    <option value="" disabled selected>Select Category</option>
+                    <option value="food">Food</option>
+                    <option value="entertainment">Entertainment</option>
+                    <option value="shopping">Shopping</option>
+                    <option value="travel">Travel</option>
+                </select>
+            </div>
+    
+            <!-- Transaction Subcategory -->
+            <div class="col-md-3 mb-3">
+                <label for="transaction_subcategory" class="form-label">Transaction Subcategory</label>
+                <select class="form-select" id="transaction_subcategory" name="transaction_subcategory">
+                    <option value="" disabled selected>Select Subcategory</option>
+                </select>
+            </div>
+    
+            <!-- Advanced Transaction Type (Hidden by Default) -->
+        <div class="col-md-3 mb-3 d-none" id="advancedTransactionType">
+            <label class="form-label">Advanced Transaction Type</label>
+            <div class="d-flex">
+                <div class="form-check me-3">
+                    <input type="radio" class="form-check-input" id="refund" name="advanced_transaction_type" value="refund">
+                    <label class="form-check-label" for="refund">Refund</label>
+                </div>
+                <div class="form-check">
+                    <input type="radio" class="form-check-input" id="paylater" name="advanced_transaction_type" value="paylater">
+                    <label class="form-check-label" for="paylater">Pay Later</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3 mb-3" id="paymentMethod">
+            <label for="payment_method" class="form-label">Payment Method</label>
+            <select class="form-select" id="payment_method" name="payment_method" required>
+                <option value="" disabled selected>Select Payment Method</option>
+                <option value="cash">Cash</option>
+                <option value="credit_card">Credit Card</option>
+                <option value="debit_card">Debit Card</option>
+                <option value="upi">UPI</option>
+                <option value="net_banking">Net Banking</option>
+                <option value="wallet">Digital Wallet (e.g., PayPal, Google Pay)</option>
+            </select>
+        </div>
+        
+    
+            <!-- Additional Notes -->
+            <div class="col-md-3 mb-3">
+                <label for="transaction_notes" class="form-label">Additional Notes</label>
+                <input type="text" class="form-control" id="transaction_notes" name="transaction_notes">
+            </div>
+        </div>
+    
+        <!-- Refund Details Section (Hidden by Default) -->
+        <div class="row mt-3 d-none" id="refundDetails">
+            <h3 class="mb-3">Refund Details</h3>
+            <div class="col-md-3 mb-3">
+                <label for="refund_title" class="form-label">Refund Title</label>
+                <input type="text" class="form-control" id="refund_title" name="refund_title">
+            </div>
+            <div class="col-md-3 mb-3">
+                <label class="form-label">Refund Mode</label>
+                <div class="d-flex">
+                    <div class="form-check me-3">
+                        <input type="radio" class="form-check-input" id="full_refund" name="refund_mode" value="full">
+                        <label class="form-check-label" for="full_refund">Full Refund</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" id="partial_refund" name="refund_mode" value="partial">
+                        <label class="form-check-label" for="partial_refund">Partial Refund</label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <label for="refund_amount" class="form-label">Refund Amount</label>
+                <input type="number" class="form-control" id="refund_amount" name="refund_amount" min="0.01" step="0.01">
+            </div>
+            <div class="col-md-3 mb-3">
+                <label for="refund_date" class="form-label">Refund Date</label>
+                <input type="date" class="form-control" id="refund_date" name="refund_date">
+            </div>
+        </div>
+    
+        <!-- Pay Later Details Section (Hidden by Default) -->
+        <div class="row mt-3 d-none" id="payLaterDetails">
+            <h3 class="mb-3">Pay Later Details</h3>
+            <div class="col-md-3 mb-3">
+                <label for="paylater_title" class="form-label">Pay Later Title</label>
+                <input type="text" class="form-control" id="paylater_title" name="paylater_title">
+            </div>
+            <div class="col-md-3 mb-3">
+                <label for="paylater_amount" class="form-label">Pay Later Amount</label>
+                <input type="number" class="form-control" id="paylater_amount" name="paylater_amount" min="0.01" step="0.01">
+            </div>
+            <div class="col-md-3 mb-3">
+                <label for="due_date" class="form-label">Due Date</label>
+                <input type="date" class="form-control" id="due_date" name="due_date">
+            </div>
+        </div>
+    
+        <div class="row mt-3">
+            <!-- Submit Button -->
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-primary w-100">Submit Transaction</button>
+            </div>
+        </div>
+    </form>
+    
+    
+        
+        
+    
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    $(document).ready(function() {
+        function togglePaymentMethod() {
+            if ($('input[name="advanced_transaction_type"]:checked').val() === "paylater") {
+                $("#paymentMethod").hide();
+            } else {
+                $("#paymentMethod").show();
+            }
+        }
+
+        // Run on page load
+        togglePaymentMethod();
+
+        // Run when advanced transaction type changes
+        $('input[name="advanced_transaction_type"]').change(function () {
+            togglePaymentMethod();
+        });
+        // Set today's date and prevent future dates
+        let today = new Date().toISOString().split('T')[0];
+        $("#transaction_date").attr("max", today).val(today);
+
+        // Function to toggle advanced transaction type based on selection
+        function toggleAdvancedOptions() {
+            if ($("#expense").is(":checked")) {
+                $("#advancedTransactionType").removeClass("d-none");
+            } else {
+                $("#advancedTransactionType").addClass("d-none");
+                $("#refundDetails, #payLaterDetails").addClass("d-none"); // Hide refund/paylater when switching
+            }
+        }
+
+        // Listen for transaction type changes
+        $("input[name='transaction_type']").change(toggleAdvancedOptions);
+
+        // Listen for changes in advanced transaction type (Refund / Pay Later)
+        $("input[name='advanced_transaction_type']").change(function() {
+            $("#refundDetails").toggleClass("d-none", $(this).val() !== "refund");
+            $("#payLaterDetails").toggleClass("d-none", $(this).val() !== "paylater");
+        });
+
+        // Update subcategories dynamically based on selected category
+        $("#transaction_category").change(function() {
+            let subcategory = $("#transaction_subcategory");
+            subcategory.html("<option value='' disabled selected>Select Subcategory</option>");
+
+            let subcategories = {
+                food: ["Swiggy", "Zomato", "Restaurant", "Cafe"],
+                entertainment: ["Movies", "Concerts", "Games", "Streaming"],
+                shopping: ["Clothes", "Electronics", "Groceries"],
+                travel: ["Flights", "Hotels", "Transport"]
+            };
+
+            let selectedCategory = $(this).val();
+            if (subcategories[selectedCategory]) {
+                $.each(subcategories[selectedCategory], function(index, sub) {
+                    subcategory.append(new Option(sub, sub.toLowerCase()));
+                });
+            }
+        });
+    });
+</script>
+
+
+{% endblock %}

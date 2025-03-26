@@ -5,3 +5,18 @@ Your Finances, Your Control – Start Tracking Now!
 Spend Wisely, Save Smartly – Finance Made Simple!
 Track, Plan, Prosper – Your Financial Companion!
 Every Penny Counts – Keep Your Finances in Check!
+
+
+
+
+
+
+
+
+
+
+add transaction - http://127.0.0.1:8000/transactions/addTransaction
+transaction dashboard - http://127.0.0.1:8000/transactions/dashboard
+login - http://127.0.0.1:8000/users/login
+register - http://127.0.0.1:8000/users/register
+main dashboard - http://127.0.0.1:8000/dashboard/

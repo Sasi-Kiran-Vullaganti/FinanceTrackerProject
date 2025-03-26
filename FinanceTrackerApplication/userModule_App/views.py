@@ -27,10 +27,12 @@ def userLogin(request):
         try:
             user = UserProfile.objects.get(email=email)  
             if check_password(password, user.password):  
-                login(request, user)
+                request.session["is_authenticated"] = True
                 request.session["user_id"] = user.userid  
+                request.session["user_name"] = user.name  
+                request.session["user_email"] = user.email  
                 messages.success(request, "Login successful!")
-                return redirect("userRegister")  
+                return redirect("userDashboard")  
             else:
                 messages.error(request, "Invalid email or password.")
         except UserProfile.DoesNotExist:
@@ -71,3 +73,9 @@ def userRegister(request):
         messages.success(request, "Registration successful! You can now log in.")
         return redirect("userLogin")  
     return render(request,'userRegister.html')
+
+def userLogout(request):
+    if request.session.get("is_authenticated"):
+        request.session.flush()
+        messages.success(request, "You have been logged out successfully.")
+    return redirect("userLogin")

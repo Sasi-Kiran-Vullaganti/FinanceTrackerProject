@@ -1,5 +1,11 @@
 import re
 from .models import UserProfile
+from django.shortcuts import redirect
+
+def checkLoginStatus(request):
+    if not request.session.get("is_authenticated"):
+        print('login required')
+        return True
 
 def user_registration_validation(data):
     errors = []
