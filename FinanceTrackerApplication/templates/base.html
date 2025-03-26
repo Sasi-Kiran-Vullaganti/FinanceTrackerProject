@@ -16,6 +16,47 @@
 
     {% block extra_css %}{% endblock %}
 </head>
+<style>
+  .nav-link.active{
+    text-decoration: underline;
+    text-underline-offset: 5px;
+    font-weight: 600;
+  }
+  .nav-link:hover{
+    font-weight: 600;
+    color:#333;
+  }
+  .button {
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    padding: 6px 20px;
+    border-radius: 8px;
+    margin-right:8px;
+    cursor: pointer;
+    border: 2px solid black;
+    transition: 0.3s;
+  }
+
+  .primary-btn {
+      background-color: white;
+      color: black;
+  }
+
+  .primary-btn:hover {
+      background-color: #333;
+      color:#fff;
+  }
+
+  .secondary-btn {
+      background-color: black;
+      color: white;
+  }
+
+  .secondary-btn:hover {
+      background-color: #fff;
+      color:rgb(0, 0, 0);
+  } 
+</style>
 <body>
     
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
@@ -30,25 +71,31 @@
                 <a class="nav-link active" aria-current="page" href="#">Dashboard</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">Transactions</a>
+                <a class="nav-link" aria-current="page" href="#">Transactions</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">Refunds</a>
+                <a class="nav-link" aria-current="page" href="#">Refunds</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">Pay Later</a>
+                <a class="nav-link" aria-current="page" href="#">Pay Later</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">Split Expenses</a>
+                <a class="nav-link" aria-current="page" href="#">Split Expenses</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">Reports</a>
+                <a class="nav-link" aria-current="page" href="#">Reports</a>
               </li>
               
             </ul>
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                  <a class="btn btn-outline-danger" aria-current="page" href="#">Login / Register</a>
+                  <button class="button primary-btn" aria-current="page" href="#">Login</button>
+                </li>
+                <li class="nav-item">
+                  <button class="button secondary-btn" aria-current="page" href="#">Register</button>
+                </li>
+                <li class="nav-item">
+                  <button class="button primary-btn" aria-current="page" href="#">Logout</button>
                 </li>
               </ul>
           </div>
