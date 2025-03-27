@@ -40,7 +40,11 @@ INSTALLED_APPS = [
     # My apps
     'userModule_App',
     'Dashboard_App',
-    'Transactions_App'
+    'Transactions_App',
+    'Reports_App',
+    'SplitExpense_App',
+    'PayLater_App',
+    'Refunds_App'
 ]
 
 MIDDLEWARE = [

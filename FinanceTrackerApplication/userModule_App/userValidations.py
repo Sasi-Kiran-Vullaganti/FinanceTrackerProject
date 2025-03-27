@@ -6,6 +6,7 @@ def checkLoginStatus(request):
     if not request.session.get("is_authenticated"):
         print('login required')
         return True
+    return False
 
 def user_registration_validation(data):
     errors = []

@@ -7,6 +7,7 @@ from django.contrib.auth.hashers import make_password ,check_password
 from .models import UserProfile
 from django.contrib.auth import authenticate, login
 from .userValidations import user_registration_validation 
+from userModule_App.userValidations import checkLoginStatus 
 
 def generate_unique_userid():
     while True:
@@ -16,6 +17,9 @@ def generate_unique_userid():
 
 # Create your views here.
 def userLogin(request):
+    logincheck = checkLoginStatus(request)
+    if not logincheck:
+        return redirect('userDashboard')
     if request.method == "POST":
         email = request.POST.get("email")
         password = request.POST.get("password")
@@ -41,6 +45,9 @@ def userLogin(request):
     return render(request,'userLogin.html')
 
 def userRegister(request):
+    logincheck = checkLoginStatus(request)
+    if not logincheck:
+        return redirect('userDashboard')
     if request.method == "POST":
         data = {
             "name": request.POST.get("name"),

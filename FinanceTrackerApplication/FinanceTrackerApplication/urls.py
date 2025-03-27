@@ -22,4 +22,8 @@ urlpatterns = [
     path('users/', include('userModule_App.urls')),
     path('dashboard/',include('Dashboard_App.urls')),
     path('transactions/',include('Transactions_App.urls')),
+    path('refunds/',include('Refunds_App.urls')),
+    path('payLater/',include('PayLater_App.urls')),
+    path('reports/',include('Reports_App.urls')),
+    path('splitExpense/',include('SplitExpense_App.urls')),
 ]
