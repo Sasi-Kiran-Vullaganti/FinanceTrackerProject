@@ -12,15 +12,73 @@
         font-size: 18px;
         font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     }
+    .img-div{
+        display: flex;
+        justify-content: center;
+    }
+    .img-div img{
+        max-width: 75%;
+        height: auto;
+    }
+    .w-90{
+        width: 90%;
+    }
+    .button-container {
+    display: flex;
+    gap: 10px;
+    }
+    .button-container button {
+        white-space: nowrap;
+    }
+    /* Ensure responsiveness */
+    @media (max-width: 600px) {
+        .button-container {
+        flex-direction: row;
+        justify-content: left;
+        }
+    }
+    .button {
+        font-family: Arial, sans-serif;
+        font-size: 16px;
+        padding: 6px 20px;
+        border-radius: 8px;
+        cursor: pointer;
+        border: 2px solid black;
+        transition: 0.3s;
+        text-decoration: none;
+    }
+
+    .primary-btn {
+        background-color: white;
+        color: black;
+    }
+
+    .primary-btn:hover {
+        background-color: #333;
+        color:#fff;
+    }
+
+    .secondary-btn {
+        background-color: black;
+        color: white;
+    }
+
+    .secondary-btn:hover {
+        background-color: #fff;
+        color:rgb(0, 0, 0);
+    } 
 </style>
 {% endblock %}
 
 {% block content %}
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-6"></div>
-        <div class="col-md-6 d-flex align-items-center justify-content-center mt-5">
-            <div class="w-75">
+<div class="container mb-3">
+    <div class="row justify-content-center mt-3">
+        <div class="col-md-6 img-div">
+            <img src="https://img.freepik.com/free-vector/mobile-login-concept-illustration_114360-83.jpg?t=st=1743057531~exp=1743061131~hmac=5c4d9aa0f1e2564d48a7a660b95f4e3261398b93a0d8eea652316feeaf6d4b70&w=1380"
+             alt="UserLogin">
+        </div>
+        <div class="col-md-6 d-flex align-items-center justify-content-center">
+            <div class="w-90">
                 <p class="titleHeading1">Know Where Your Money Goes, Take Charge Today!</p>
                 <p class="subHeading1">Welcome back! Please login to your account.</p>
                 <form action="{% url 'userLogin' %}" method="post">
@@ -43,9 +101,9 @@
                         <a href="#" class="text-decoration-none">Forgot Password?</a>
                     </div>
                     <!-- Buttons Row -->
-                    <div class="mt-3 d-flex gap-2">
-                        <button type="submit" class="btn btn-primary" style="width: 130px; height: 55px;">Login</button>
-                        <a href="register.html" class="btn btn-secondary" style="width: 130px; height: 55px;">Register</a>
+                    <div class="mt-3 d-flex justify-content-center gap-2">
+                        <button type="submit" class="button primary-btn">Login</button>
+                        <a href="register.html" class="button secondary-btn">Register</a>
                     </div>
                 </form>
             </div>

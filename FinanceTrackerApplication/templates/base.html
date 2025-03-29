@@ -26,15 +26,31 @@
     font-weight: 600;
     color:#333;
   }
+  .button-container {
+    display: flex;
+    gap: 10px;
+  }
+
+  .button-container button {
+    white-space: nowrap;
+  }
+
+  /* Ensure responsiveness */
+  @media (max-width: 600px) {
+    .button-container {
+      flex-direction: row;
+      justify-content: left;
+    }
+  }
   .button {
     font-family: Arial, sans-serif;
     font-size: 16px;
     padding: 6px 20px;
     border-radius: 8px;
-    margin-right:8px;
     cursor: pointer;
     border: 2px solid black;
     transition: 0.3s;
+    text-decoration: none;
   }
 
   .primary-btn {
@@ -87,7 +103,7 @@
               </li>
               
             </ul>
-            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0 button-container">
               {% if request.session.is_authenticated %}
               <li class="nav-item">
                 <a class="button primary-btn" href="{% url 'userLogout' %}">Logout</a>
