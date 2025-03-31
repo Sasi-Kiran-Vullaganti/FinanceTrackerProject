@@ -26,4 +26,5 @@ urlpatterns = [
     path('payLater/',include('PayLater_App.urls')),
     path('reports/',include('Reports_App.urls')),
     path('splitExpense/',include('SplitExpense_App.urls')),
+    path('api/',include('api_App.urls')),
 ]

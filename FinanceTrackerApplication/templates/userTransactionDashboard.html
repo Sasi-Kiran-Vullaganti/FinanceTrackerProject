@@ -8,7 +8,16 @@
 {% endblock %}
 
 {% block content %}
-<h1>Transaction Dashboard</h1>
+<div class="container mt-3">
+    <div class="row">
+        <div class="col-6">
+            <h3>Transaction dashboard</h3>
+        </div>
+        <div class="col-6">
+            <a href="{% url 'addTransaction' %}">+ add new transaction</a>
+        </div>
+    </div>
+</div>
 {% endblock %}
 
 {% block extra_js %}

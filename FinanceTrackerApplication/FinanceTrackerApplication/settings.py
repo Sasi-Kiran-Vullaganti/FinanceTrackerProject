@@ -44,7 +44,9 @@ INSTALLED_APPS = [
     'Reports_App',
     'SplitExpense_App',
     'PayLater_App',
-    'Refunds_App'
+    'Refunds_App',
+    'api_App',
+    'rest_framework'
 ]
 
 MIDDLEWARE = [

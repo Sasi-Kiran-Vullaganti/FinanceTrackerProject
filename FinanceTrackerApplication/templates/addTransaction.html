@@ -50,24 +50,20 @@
             </div>
     
             <!-- Transaction Category -->
-            <div class="col-md-3 mb-3">
-                <label for="transaction_category" class="form-label">Transaction Category</label>
-                <select class="form-select" id="transaction_category" name="transaction_category" required>
-                    <option value="" disabled selected>Select Category</option>
-                    <option value="food">Food</option>
-                    <option value="entertainment">Entertainment</option>
-                    <option value="shopping">Shopping</option>
-                    <option value="travel">Travel</option>
-                </select>
-            </div>
-    
-            <!-- Transaction Subcategory -->
-            <div class="col-md-3 mb-3">
-                <label for="transaction_subcategory" class="form-label">Transaction Subcategory</label>
-                <select class="form-select" id="transaction_subcategory" name="transaction_subcategory">
-                    <option value="" disabled selected>Select Subcategory</option>
-                </select>
-            </div>
+<div class="col-md-3 mb-3">
+    <label for="transaction_category" class="form-label">Transaction Category</label>
+    <select class="form-select" id="transaction_category" name="transaction_category" required>
+        <option value="" disabled selected>Select Category</option>
+    </select>
+</div>
+
+<!-- Placeholder for Subcategory Dropdown -->
+<div id="subcategory_container" class="col-md-3 mb-3" style="display: none;">
+    <label for="transaction_subcategory" class="form-label">Transaction Subcategory</label>
+    <select class="form-select" id="transaction_subcategory" name="transaction_subcategory">
+        <option value="" disabled selected>Select Subcategory</option>
+    </select>
+</div>
     
             <!-- Advanced Transaction Type (Hidden by Default) -->
         <div class="col-md-3 mb-3 d-none" id="advancedTransactionType">
@@ -88,12 +84,7 @@
             <label for="payment_method" class="form-label">Payment Method</label>
             <select class="form-select" id="payment_method" name="payment_method" required>
                 <option value="" disabled selected>Select Payment Method</option>
-                <option value="cash">Cash</option>
-                <option value="credit_card">Credit Card</option>
-                <option value="debit_card">Debit Card</option>
-                <option value="upi">UPI</option>
-                <option value="net_banking">Net Banking</option>
-                <option value="wallet">Digital Wallet (e.g., PayPal, Google Pay)</option>
+                <!-- Options will be populated here -->
             </select>
         </div>
         
@@ -171,6 +162,7 @@
 {% block extra_js %}
 <script>
     $(document).ready(function() {
+        $("#paymentMethod").show();
         function togglePaymentMethod() {
             if ($('input[name="advanced_transaction_type"]:checked').val() === "paylater") {
                 $("#paymentMethod").hide();
@@ -178,38 +170,25 @@
                 $("#paymentMethod").show();
             }
         }
-
-        // Run on page load
         togglePaymentMethod();
-
-        // Run when advanced transaction type changes
         $('input[name="advanced_transaction_type"]').change(function () {
             togglePaymentMethod();
         });
-        // Set today's date and prevent future dates
         let today = new Date().toISOString().split('T')[0];
         $("#transaction_date").attr("max", today).val(today);
-
-        // Function to toggle advanced transaction type based on selection
         function toggleAdvancedOptions() {
             if ($("#expense").is(":checked")) {
                 $("#advancedTransactionType").removeClass("d-none");
             } else {
                 $("#advancedTransactionType").addClass("d-none");
-                $("#refundDetails, #payLaterDetails").addClass("d-none"); // Hide refund/paylater when switching
+                $("#refundDetails, #payLaterDetails").addClass("d-none");
             }
         }
-
-        // Listen for transaction type changes
         $("input[name='transaction_type']").change(toggleAdvancedOptions);
-
-        // Listen for changes in advanced transaction type (Refund / Pay Later)
         $("input[name='advanced_transaction_type']").change(function() {
             $("#refundDetails").toggleClass("d-none", $(this).val() !== "refund");
             $("#payLaterDetails").toggleClass("d-none", $(this).val() !== "paylater");
         });
-
-        // Update subcategories dynamically based on selected category
         $("#transaction_category").change(function() {
             let subcategory = $("#transaction_subcategory");
             subcategory.html("<option value='' disabled selected>Select Subcategory</option>");
@@ -230,6 +209,99 @@
         });
     });
 </script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const userId = '{{ user.userid }}'; 
+        const categorySelect = document.getElementById('transaction_category');
 
+        // Fetch categories
+        fetch(`/api/categories/${userId}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Clear existing options
+                categorySelect.innerHTML = '<option value="" disabled selected>Select Category</option>';
+                
+                // Populate the select element with categories
+                data.forEach(category => {
+                    const option = document.createElement('option');
+                    option.value = category.category_id; // or category.category_name based on your needs
+                    option.textContent = category.category_name; // Display the category name
+                    categorySelect.appendChild(option);
+                });
+            })
+            .catch(error => {
+                console.error('There was a problem with the fetch operation:', error);
+            });
+
+        // Event listener for category selection
+        categorySelect.addEventListener('change', function() {
+            const categoryId = this.value;  // Get the selected category ID
+            const subcategorySelect = document.getElementById('transaction_subcategory');
+            const subcategoryContainer = document.getElementById('subcategory_container');
+
+            // Clear existing subcategory options
+            subcategorySelect.innerHTML = '<option value="" disabled selected>Select Subcategory</option>';
+
+            // Show the subcategory container
+            subcategoryContainer.style.display = 'block';
+
+            // Fetch subcategories based on the selected category ID
+            fetch(`/api/subCategories/${categoryId}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    // Populate the subcategory dropdown
+                    data.forEach(subcategory => {
+                        const option = document.createElement('option');
+                        option.value = subcategory.subcategory_id;  // Set value to subcategory ID
+                        option.textContent = subcategory.subcategory_name;  // Display subcategory name
+                        subcategorySelect.appendChild(option);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error fetching subcategories:', error);
+                });
+        });
+    });
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const userId = '{{ user.userid }}'; // Assuming you have user ID available in your template
+        const paymentMethodSelect = document.getElementById('payment_method');
+
+        // Fetch payment methods from the API
+        fetch(`/api/paymentMethods/${userId}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Clear existing options
+                paymentMethodSelect.innerHTML = '<option value="" disabled selected>Select Payment Method</option>';
+                
+                // Populate the select element with payment methods
+                data.forEach(paymentMethod => {
+                    const option = document.createElement('option');
+                    option.value = paymentMethod.payment_method_id; // Use the ID as the value
+                    option.textContent = paymentMethod.payment_method_name; // Display the payment method name
+                    paymentMethodSelect.appendChild(option);
+                });
+            })
+            .catch(error => {
+                console.error('There was a problem with the fetch operation:', error);
+            });
+    });
+</script>
 
 {% endblock %}

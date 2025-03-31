@@ -9,6 +9,10 @@ from django.contrib.auth import authenticate, login
 from .userValidations import user_registration_validation 
 from userModule_App.userValidations import checkLoginStatus 
 
+def getUserData(userid):
+    user = UserProfile.objects.get(userid=userid)
+    return user
+
 def generate_unique_userid():
     while True:
         userid = f"USR{''.join(random.choices(string.digits, k=7))}"
