@@ -12,7 +12,7 @@
 
 <div class="container">
     <h1>Add new transaction</h1>
-    <form action="" method="post" class="container">
+    <form action="addTransaction" method="post" class="container">
         {% csrf_token %}
         <div class="row g-3 align-items-center mt-3">
     
@@ -27,7 +27,7 @@
                 <label class="form-label">Transaction Type</label>
                 <div class="d-flex">
                     <div class="form-check me-3">
-                        <input type="radio" class="form-check-input" id="income" name="transaction_type" value="income" required>
+                        <input type="radio" class="form-check-input" id="income" name="transaction_type" value="income" checked required>
                         <label class="form-check-label" for="income">Income</label>
                     </div>
                     <div class="form-check">
@@ -50,20 +50,30 @@
             </div>
     
             <!-- Transaction Category -->
-<div class="col-md-3 mb-3">
-    <label for="transaction_category" class="form-label">Transaction Category</label>
-    <select class="form-select" id="transaction_category" name="transaction_category" required>
-        <option value="" disabled selected>Select Category</option>
-    </select>
-</div>
+            <div class="col-md-3 mb-3">
+                <label for="transaction_category" class="form-label">Transaction Category
+                <!-- Add Category modal -->
+                <a type="button" class="" data-bs-toggle="modal" data-bs-target="#addCategoryModel">
+                    + new
+                </a>
+                </label>
+                <select class="form-select" id="transaction_category" name="transaction_category" required>
+                    <option value="" disabled selected>Select Category</option>
+                </select>
+            </div>
 
-<!-- Placeholder for Subcategory Dropdown -->
-<div id="subcategory_container" class="col-md-3 mb-3" style="display: none;">
-    <label for="transaction_subcategory" class="form-label">Transaction Subcategory</label>
-    <select class="form-select" id="transaction_subcategory" name="transaction_subcategory">
-        <option value="" disabled selected>Select Subcategory</option>
-    </select>
-</div>
+            <!-- Placeholder for Subcategory Dropdown -->
+            <div id="subcategory_container" class="col-md-3 mb-3" style="display: none;">
+                <label for="transaction_subcategory" class="form-label">Transaction Subcategory
+                    <!-- Add Sub Category modal -->
+                    <a type="button" class="" data-bs-toggle="modal" data-bs-target="#addSubCategoryModel">
+                        + new
+                    </a>
+                </label>
+                <select class="form-select" id="transaction_subcategory" name="transaction_subcategory">
+                    <option value="" disabled selected>Select Subcategory</option>
+                </select>
+            </div>
     
             <!-- Advanced Transaction Type (Hidden by Default) -->
         <div class="col-md-3 mb-3 d-none" id="advancedTransactionType">
@@ -81,7 +91,12 @@
         </div>
 
         <div class="col-md-3 mb-3" id="paymentMethod">
-            <label for="payment_method" class="form-label">Payment Method</label>
+            <label for="payment_method" class="form-label">Payment Method
+                <!-- Add Payment method modal -->
+                <a type="button" class="" data-bs-toggle="modal" data-bs-target="#addPaymentMethodModel">
+                    + new
+                </a>
+            </label>
             <select class="form-select" id="payment_method" name="payment_method" required>
                 <option value="" disabled selected>Select Payment Method</option>
                 <!-- Options will be populated here -->
@@ -151,7 +166,81 @@
         </div>
     </form>
     
-    
+    <!-- Category Modal -->
+<div class="modal fade" id="addCategoryModel" tabindex="-1" aria-labelledby="addCategoryModel">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5">Add New Category</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form id="addCategoryForm">
+                {% csrf_token %}
+                <div class="mb-3">
+                  <label for="newCategoryName" class="form-label">Category Name</label>
+                  <input type="hidden" id="userId" value="{{ user.userid }}">
+                  <input type="text" class="form-control" id="newCategoryName" name="newCategoryName" aria-describedby="emailHelp">
+                  <small id="newCategoryError" class="text-danger" style="display:none;"></small>
+                </div>
+                <button type="button" class="btn btn-primary" id="submitCategory">Submit</button>
+              </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sub Category Modal -->
+<div class="modal fade" id="addSubCategoryModel" tabindex="-1" aria-labelledby="addSubCategoryModel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Add New Sub Category</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form id="addSubCategoryForm">
+                <div class="mb-3">
+                    <label for="forCategoryValue" class="form-label">For Category Name</label>
+                    <div id="forCategoryValue" class="form-text "></div>
+                  </div>
+                <div class="mb-3">
+                  <label for="newSubCategoryName" class="form-label">New Sub Category Name</label>
+                  <input type="text" class="form-control" id="newSubCategoryName" name="newSubCategoryName" aria-describedby="emailHelp">
+                  <div id="newSubCategoryError" class="form-text text-danger">SubCategory name already exists</div>
+                </div>
+                <button type="button" class="btn btn-primary" id="submitSubCategory">Submit</button>
+              </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Payment Method Modal -->
+<div class="modal fade" id="addPaymentMethodModel" tabindex="-1" aria-labelledby="addPaymentMethodModel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5">Add New Payment Method</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="addPaymentMethodForm">
+                    <div class="mb-3">
+                        <label for="forTranTypeValue" class="form-label">Transaction Type</label>
+                        <div id="forTranTypeValue" class="form-text"></div>
+                      </div>
+                    <div class="mb-3">
+                      <label for="newPaymentMethodName" class="form-label">New Payment Method</label>
+                      <input type="text" class="form-control" id="newPaymentMethodName" name="newPaymentMethodName" aria-describedby="emailHelp">
+                      <div id="newPaymentMethodError" class="form-text text-danger">Paymnt Method already exists</div>
+                    </div>
+                    <button type="button" class="btn btn-primary" id="submitPaymentMethod">Submit</button>
+                  </form>
+            </div>
+          </div>
+    </div>
+  </div>
         
         
     
@@ -161,147 +250,258 @@
 
 {% block extra_js %}
 <script>
-    $(document).ready(function() {
-        $("#paymentMethod").show();
-        function togglePaymentMethod() {
-            if ($('input[name="advanced_transaction_type"]:checked').val() === "paylater") {
-                $("#paymentMethod").hide();
-            } else {
-                $("#paymentMethod").show();
+$(document).ready(function() {
+
+    const paymentType = $('input[name="transaction_type"]:checked').val(); 
+    const categoryName = $('#transaction_category option:selected').text();
+
+    $('#forTranTypeValue').text(paymentType);
+    $('#forCategoryValue').text(categoryName);
+
+
+    // CSRF Token
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
             }
         }
-        togglePaymentMethod();
-        $('input[name="advanced_transaction_type"]').change(function () {
-            togglePaymentMethod();
-        });
-        let today = new Date().toISOString().split('T')[0];
-        $("#transaction_date").attr("max", today).val(today);
-        function toggleAdvancedOptions() {
-            if ($("#expense").is(":checked")) {
-                $("#advancedTransactionType").removeClass("d-none");
-            } else {
-                $("#advancedTransactionType").addClass("d-none");
-                $("#refundDetails, #payLaterDetails").addClass("d-none");
+        return cookieValue;
+    }
+    const csrftoken = getCookie('csrftoken');
+    const userId = '{{ user.userid }}';
+
+    // Elements
+    const $categorySelect = $('#transaction_category');
+    const $subcategorySelect = $('#transaction_subcategory');
+    const $subcategoryContainer = $('#subcategory_container');
+    const $paymentMethodSelect = $('#payment_method');
+
+    // ========== GET CATEGORIES ==========
+    function getAllCategories() {
+        $.ajax({
+            url: `/api/categories/${userId}`,
+            method: 'GET',
+            dataType: 'json',
+            success: function(data) {
+                $categorySelect.empty().append('<option value="" disabled selected>Select Category</option>');
+                $.each(data, function(index, category) {
+                    $categorySelect.append(
+                        `<option value="${category.category_id}">${category.category_name}</option>`
+                    );
+                });
+            },
+            error: function(xhr, status, error) {
+                console.error('Error fetching categories:', status, error);
             }
+        });
+    }
+
+    function getAllSubCategoriesByCategory(categoryId){
+        
+        $subcategorySelect.empty().append('<option value="" disabled selected>Select Subcategory</option>');
+        $subcategoryContainer.show();
+
+        $.ajax({
+            url: `/api/subCategories/${categoryId}`,
+            method: 'GET',
+            dataType: 'json',
+            success: function(data) {
+                $.each(data, function(index, subcategory) {
+                    $subcategorySelect.append(
+                        `<option value="${subcategory.subcategory_id}">${subcategory.subcategory_name}</option>`
+                    );
+                });
+            },
+            error: function(xhr, status, error) {
+                console.error('Error fetching subcategories:', status, error);
+            }
+        });
+    }
+
+    // ========== GET SUBCATEGORIES ON CATEGORY CHANGE ==========
+    $categorySelect.on('change', function() {
+        const categoryId = $(this).val();
+        getAllSubCategoriesByCategory(categoryId);
+    });
+
+    // ========== GET PAYMENT METHODS ==========
+    function getPaymentMethods(paymentType = null) {
+        $.ajax({
+            url: `/api/paymentMethods/${userId}`,
+            method: 'GET',
+            dataType: 'json',
+            success: function(data) {
+                $paymentMethodSelect.empty().append('<option value="" disabled selected>Select Payment Method</option>');
+
+                // Filter by payment_type if specified
+                const filteredData = paymentType 
+                    ? data.filter(method => method.payment_type === paymentType)
+                    : data;
+
+                $.each(filteredData, function(index, method) {
+                    $paymentMethodSelect.append(
+                        `<option value="${method.payment_method_id}">${method.payment_method_name}</option>`
+                    );
+                });
+            },
+            error: function(xhr, status, error) {
+                console.error('Error fetching payment methods:', status, error);
+            }
+        });
+    }
+
+
+    $('#submitPaymentMethod').on('click', function () {
+        debugger
+        const paymentMethodName = $('#newPaymentMethodName').val();
+        const userId = '{{ user.userid }}';
+        const paymentType = $('input[name="transaction_type"]:checked').val(); // "income" or "expense"
+
+        const data = {
+            payment_method_name: paymentMethodName,
+            user: userId,
+            payment_type: paymentType
+        };
+
+        $.ajax({
+            url: '/api/paymentMethods/add/',
+            type: 'POST',
+            headers: {
+                'X-CSRFToken': csrftoken
+            },
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            success: function (response) {
+                console.log('Payment method added:', response);
+                $('#addPaymentMethodModel').modal('hide');
+                $('#addPaymentMethodForm')[0].reset();
+                $('#newPaymentMethodError').hide();
+                getPaymentMethods(); // Refresh dropdown
+            },
+            error: function (xhr) {
+                console.error('Error:', xhr.responseText);
+                $('#newPaymentMethodError').show();
+            }
+        });
+    });
+
+    // ========== SUBMIT NEW SUBCATEGORY ==========
+    $('#submitSubCategory').on('click', function() {
+        const subCategoryName = $('#newSubCategoryName').val();
+        const categoryId = $('#transaction_category').val(); 
+        const data = {
+            subcategory_name: subCategoryName,
+            category: categoryId
+        };
+
+        $.ajax({
+            url: '/api/subCategories/add/',  // Your correct URL
+            type: 'POST',
+            headers: {
+                'X-CSRFToken': csrftoken
+            },
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            success: function(response) {
+                console.log('SubCategory added:', response);
+                $('#addSubCategoryModel').modal('hide');
+                $('#addSubCategoryForm')[0].reset();
+                getAllSubCategoriesByCategory(categoryId);  // Optional function to refresh your dropdown list
+            },
+            error: function(xhr) {
+                console.error('Error:', xhr.responseText);
+                $('#newSubCategoryError').text(xhr.responseJSON.detail || "Something went wrong").show();
+            }
+        });
+    });
+
+
+    // ========== SUBMIT NEW CATEGORY ==========
+$('#submitCategory').on('click', function() {
+    const categoryName = $('#newCategoryName').val();
+    const userIdInput = $('#userId').val();
+
+    const data = {
+        category_name: categoryName,
+        user: userIdInput
+    };
+
+    $.ajax({
+        url: '/api/categories/add/',
+        type: 'POST',
+        headers: {
+            'X-CSRFToken': csrftoken
+        },
+        contentType: 'application/json',
+        data: JSON.stringify(data),
+        success: function(response) {
+            console.log('Category added:', response);
+            $('#addCategoryModel').modal('hide');
+            $('#addCategoryForm')[0].reset();
+            getAllCategories();  // Reload categories list
+        },
+        error: function(xhr) {
+            const errorResponse = JSON.parse(xhr.responseText);
+            let errorMsg = errorResponse.detail || errorResponse.category_name?.[0] || 'Something went wrong!';
+            
+            console.error('Error:', errorMsg);
+
+            $('#newCategoryError').text(errorMsg).show();  // Show error message
         }
-        $("input[name='transaction_type']").change(toggleAdvancedOptions);
-        $("input[name='advanced_transaction_type']").change(function() {
-            $("#refundDetails").toggleClass("d-none", $(this).val() !== "refund");
-            $("#payLaterDetails").toggleClass("d-none", $(this).val() !== "paylater");
-        });
-        $("#transaction_category").change(function() {
-            let subcategory = $("#transaction_subcategory");
-            subcategory.html("<option value='' disabled selected>Select Subcategory</option>");
-
-            let subcategories = {
-                food: ["Swiggy", "Zomato", "Restaurant", "Cafe"],
-                entertainment: ["Movies", "Concerts", "Games", "Streaming"],
-                shopping: ["Clothes", "Electronics", "Groceries"],
-                travel: ["Flights", "Hotels", "Transport"]
-            };
-
-            let selectedCategory = $(this).val();
-            if (subcategories[selectedCategory]) {
-                $.each(subcategories[selectedCategory], function(index, sub) {
-                    subcategory.append(new Option(sub, sub.toLowerCase()));
-                });
-            }
-        });
     });
-</script>
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const userId = '{{ user.userid }}'; 
-        const categorySelect = document.getElementById('transaction_category');
+});
 
-        // Fetch categories
-        fetch(`/api/categories/${userId}`)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                // Clear existing options
-                categorySelect.innerHTML = '<option value="" disabled selected>Select Category</option>';
-                
-                // Populate the select element with categories
-                data.forEach(category => {
-                    const option = document.createElement('option');
-                    option.value = category.category_id; // or category.category_name based on your needs
-                    option.textContent = category.category_name; // Display the category name
-                    categorySelect.appendChild(option);
-                });
-            })
-            .catch(error => {
-                console.error('There was a problem with the fetch operation:', error);
-            });
 
-        // Event listener for category selection
-        categorySelect.addEventListener('change', function() {
-            const categoryId = this.value;  // Get the selected category ID
-            const subcategorySelect = document.getElementById('transaction_subcategory');
-            const subcategoryContainer = document.getElementById('subcategory_container');
 
-            // Clear existing subcategory options
-            subcategorySelect.innerHTML = '<option value="" disabled selected>Select Subcategory</option>';
+    // ========== ADVANCED TRANSACTION TYPE TOGGLE ==========
+    function togglePaymentMethod() {
+        if ($('input[name="advanced_transaction_type"]:checked').val() === "paylater") {
+            $("#paymentMethod").hide();
+            $('#payment_method').prop('required', false);  // Remove required when paylater
+        } else {
+            $("#paymentMethod").show();
+            $('#payment_method').prop('required', true);   // Add required when not paylater
+        }
 
-            // Show the subcategory container
-            subcategoryContainer.style.display = 'block';
+    }
 
-            // Fetch subcategories based on the selected category ID
-            fetch(`/api/subCategories/${categoryId}`)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    // Populate the subcategory dropdown
-                    data.forEach(subcategory => {
-                        const option = document.createElement('option');
-                        option.value = subcategory.subcategory_id;  // Set value to subcategory ID
-                        option.textContent = subcategory.subcategory_name;  // Display subcategory name
-                        subcategorySelect.appendChild(option);
-                    });
-                })
-                .catch(error => {
-                    console.error('Error fetching subcategories:', error);
-                });
-        });
+    $('input[name="advanced_transaction_type"]').change(togglePaymentMethod);
+    togglePaymentMethod(); // Initial call
+
+    // ========== DATE DEFAULT TO TODAY ==========
+    let today = new Date().toISOString().split('T')[0];
+    $("#transaction_date").attr("max", today).val(today);
+
+    // ========== TOGGLE ADVANCED FIELDS BASED ON TRANSACTION TYPE ==========
+    function toggleAdvancedOptions() {
+        if ($("#expense").is(":checked")) {
+            $("#advancedTransactionType").removeClass("d-none");
+        } else {
+            $("#advancedTransactionType").addClass("d-none");
+            $("#refundDetails, #payLaterDetails").addClass("d-none");
+        }
+    }
+
+    $("input[name='transaction_type']").change(toggleAdvancedOptions);
+    $("input[name='advanced_transaction_type']").change(function() {
+        $("#refundDetails").toggleClass("d-none", $(this).val() !== "refund");
+        $("#payLaterDetails").toggleClass("d-none", $(this).val() !== "paylater");
     });
-</script>
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const userId = '{{ user.userid }}'; // Assuming you have user ID available in your template
-        const paymentMethodSelect = document.getElementById('payment_method');
 
-        // Fetch payment methods from the API
-        fetch(`/api/paymentMethods/${userId}`)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                // Clear existing options
-                paymentMethodSelect.innerHTML = '<option value="" disabled selected>Select Payment Method</option>';
-                
-                // Populate the select element with payment methods
-                data.forEach(paymentMethod => {
-                    const option = document.createElement('option');
-                    option.value = paymentMethod.payment_method_id; // Use the ID as the value
-                    option.textContent = paymentMethod.payment_method_name; // Display the payment method name
-                    paymentMethodSelect.appendChild(option);
-                });
-            })
-            .catch(error => {
-                console.error('There was a problem with the fetch operation:', error);
-            });
-    });
+    // ========== INITIALIZE ALL ==========
+    getAllCategories();
+    getPaymentMethods();
+    $('#newPaymentMethodError').hide();
+
+});
 </script>
+
 
 {% endblock %}

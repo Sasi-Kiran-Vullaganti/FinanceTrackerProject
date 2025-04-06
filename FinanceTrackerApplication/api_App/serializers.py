@@ -5,7 +5,13 @@ from Transactions_App.models import Category,Subcategory,PaymentMethod
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
-        fields = ['category_id', 'category_name', 'user']
+        fields = '__all__'
+
+    def validate_category_name(self, value):
+        user = self.initial_data.get('user')
+        if Category.objects.filter(user_id=user, category_name=value).exists():
+            raise serializers.ValidationError("This category already exists for you!")
+        return value
 
 class SubCategorySerializer(serializers.ModelSerializer):
     class Meta:
