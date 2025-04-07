@@ -4,6 +4,8 @@ from userModule_App.models import UserProfile
 from userModule_App.views import getUserData
 from .models import Category,Subcategory,Transaction,PaymentMethod,Refund,PayLater
 from django.contrib import messages
+from datetime import datetime, timedelta
+from django.core.exceptions import ObjectDoesNotExist
 
 # Create your views here.
 def transactionDashboard(request):
@@ -89,13 +91,80 @@ def addTransaction(request):
         paylater_amount = request.POST.get('paylater_amount')
         due_date = request.POST.get('due_date')
 
-        # ForeignKeys
-        CategoryID = Category.objects.get(category_id=transaction_category)
-        SubcategoryID = Subcategory.objects.get(subcategory_id=transaction_subcategory)
+        # Initialize error list
+        errors = []
 
-        paymentMethodID = None  # Default None
-        if payment_method:  # Only fetch if provided
-            paymentMethodID = PaymentMethod.objects.get(payment_method_id=payment_method)
+        # Validate required fields and their constraints
+        if not transaction_name or not (3 <= len(transaction_name) <= 12):
+            errors.append("Transaction name is required and must be between 3 and 12 characters.")
+        if not transaction_type:
+            errors.append("Transaction type is required.")
+        if not transaction_amount or not transaction_amount.isdigit() or int(transaction_amount) <= 0:
+            errors.append("Transaction amount is required and must be a positive number.")
+        if not transaction_date:
+            errors.append("Transaction date is required.")
+        else:
+            try:
+                transaction_date_obj = datetime.strptime(transaction_date, '%Y-%m-%d')
+                if transaction_date_obj > datetime.now():
+                    errors.append("Transaction date cannot be in the future.")
+            except ValueError:
+                errors.append("Transaction date must be in the format YYYY-MM-DD.")
+        
+        if not transaction_category:
+            errors.append("Transaction category is required.")
+        if not transaction_subcategory:
+            errors.append("Transaction subcategory is required.")
+        if transaction_notes and len(transaction_notes) > 255:
+            errors.append("Transaction notes cannot exceed 255 characters.")
+
+        # Validate refund fields if advanced_transaction_type is 'refund'
+        if advanced_transaction_type == 'refund' and transaction_type == 'expense':
+            if not refund_title or not (3 <= len(refund_title) <= 12):
+                errors.append("Refund title is required and must be between 3 and 12 characters.")
+            if not refund_mode:
+                errors.append("Refund mode is required.")
+            if not refund_amount or not refund_amount.isdigit() or int(refund_amount) <= 0:
+                errors.append("Refund amount is required and must be a positive number.")
+            if not refund_date:
+                errors.append("Refund date is required.")
+            else:
+                try:
+                    refund_date_obj = datetime.strptime(refund_date, '%Y-%m-%d')
+                    if refund_date_obj > datetime.now():
+                        errors.append("Refund date cannot be in the future.")
+                except ValueError:
+                    errors.append("Refund date must be in the format YYYY-MM-DD.")
+
+        # Validate paylater fields if advanced_transaction_type is 'paylater'
+        if advanced_transaction_type == 'paylater' and transaction_type == 'expense':
+            if not paylater_title or not (3 <= len(paylater_title) <= 12):
+                errors.append("Paylater title is required and must be between 3 and 12 characters.")
+            if not paylater_amount or not paylater_amount.isdigit() or int(paylater_amount) <= 0:
+                errors.append("Paylater amount is required and must be a positive number.")
+            if not due_date:
+                errors.append("Due date is required.")
+            else:
+                try:
+                    due_date_obj = datetime.strptime(due_date, '%Y-%m-%d')
+                    if due_date_obj < datetime.now():
+                        errors.append("Due date must be in the future.")
+                except ValueError:
+                    errors.append("Due date must be in the format YYYY-MM-DD.")
+
+        # If there are validation errors, return to the form with errors
+        if errors:
+            print(errors)
+            return render(request, 'addTransaction.html', {'user': user, 'errors': errors})
+
+        # ForeignKeys
+        try:
+            category_instance = Category.objects.get(category_id=transaction_category)
+            subcategory_instance = Subcategory.objects.get(subcategory_id=transaction_subcategory)
+            paymentMethodID = PaymentMethod.objects.get(payment_method_id=payment_method) if payment_method else None
+        except ObjectDoesNotExist as e:
+            errors.append(f"Error fetching related data: {str(e)}")
+            return render(request, 'addTransaction.html', {'user': user, 'errors': errors})
 
         refund_instance = None
         paylater_instance = None
@@ -124,8 +193,8 @@ def addTransaction(request):
             type=transaction_type,
             txn_date=transaction_date,
             user=user,
-            category=CategoryID,
-            subcategory=SubcategoryID,
+            category=category_instance,
+            subcategory=subcategory_instance,
             payment_method=paymentMethodID,  # can be None
             notes=transaction_notes,
             expense_type=advanced_transaction_type or 'normal',

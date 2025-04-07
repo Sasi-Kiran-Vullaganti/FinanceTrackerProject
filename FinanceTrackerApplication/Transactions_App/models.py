@@ -5,11 +5,16 @@ import uuid
 
 class Category(models.Model):
     category_id = models.AutoField(primary_key=True)
-    category_name = models.CharField(max_length=255, unique=True)
+    category_name = models.CharField(max_length=255)
     user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+
+    class Meta:
+        unique_together = ('user', 'category_name')  
+        ordering = ['category_name']  
 
     def __str__(self):
         return self.category_name
+
 
 
 class Subcategory(models.Model):

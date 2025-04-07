@@ -20,6 +20,9 @@
             <div class="col-md-3 mb-3">
                 <label for="transaction_name" class="form-label">Transaction Name</label>
                 <input type="text" class="form-control" id="transaction_name" name="transaction_name" required>
+                {% if errors.transaction_name %}
+                    <div class="text-danger">{{ errors.transaction_name }}</div>
+                {% endif %}
             </div>
     
             <!-- Transaction Type (Radio Buttons) -->
@@ -35,79 +38,93 @@
                         <label class="form-check-label" for="expense">Expense</label>
                     </div>
                 </div>
+                {% if errors.transaction_type %}
+                    <div class="text-danger">{{ errors.transaction_type }}</div>
+                {% endif %}
             </div>
     
             <!-- Transaction Amount -->
             <div class="col-md-3 mb-3">
                 <label for="transaction_amount" class="form-label">Transaction Amount</label>
                 <input type="number" class="form-control" id="transaction_amount" name="transaction_amount" required min="0.01" step="0.01">
+                {% if errors.transaction_amount %}
+                    <div class="text-danger">{{ errors.transaction_amount }}</div>
+                {% endif %}
             </div>
     
             <!-- Transaction Date -->
             <div class="col-md-3 mb-3">
                 <label for="transaction_date" class="form-label">Transaction Date</label>
                 <input type="date" class="form-control" id="transaction_date" name="transaction_date" required>
+                {% if errors.transaction_date %}
+                    <div class="text-danger">{{ errors.transaction_date }}</div>
+                {% endif %}
             </div>
     
             <!-- Transaction Category -->
             <div class="col-md-3 mb-3">
                 <label for="transaction_category" class="form-label">Transaction Category
-                <!-- Add Category modal -->
-                <a type="button" class="" data-bs-toggle="modal" data-bs-target="#addCategoryModel">
-                    + new
-                </a>
+                    <a type="button" class="" data-bs-toggle="modal" data-bs-target="#addCategoryModel">+ new</a>
                 </label>
                 <select class="form-select" id="transaction_category" name="transaction_category" required>
                     <option value="" disabled selected>Select Category</option>
                 </select>
+                {% if errors.transaction_category %}
+                    <div class="text-danger">{{ errors.transaction_category }}</div>
+                {% endif %}
             </div>
-
+    
             <!-- Placeholder for Subcategory Dropdown -->
             <div id="subcategory_container" class="col-md-3 mb-3" style="display: none;">
                 <label for="transaction_subcategory" class="form-label">Transaction Subcategory
-                    <!-- Add Sub Category modal -->
-                    <a type="button" class="" data-bs-toggle="modal" data-bs-target="#addSubCategoryModel">
-                        + new
-                    </a>
+                    <a type="button" class="" data-bs-toggle="modal" data-bs-target="#addSubCategoryModel">+ new</a>
                 </label>
                 <select class="form-select" id="transaction_subcategory" name="transaction_subcategory">
                     <option value="" disabled selected>Select Subcategory</option>
                 </select>
+                {% if errors.transaction_subcategory %}
+                    <div class="text-danger">{{ errors.transaction_subcategory }}</div>
+                {% endif %}
             </div>
     
             <!-- Advanced Transaction Type (Hidden by Default) -->
-        <div class="col-md-3 mb-3 d-none" id="advancedTransactionType">
-            <label class="form-label">Advanced Transaction Type</label>
-            <div class="d-flex">
-                <div class="form-check me-3">
-                    <input type="radio" class="form-check-input" id="refund" name="advanced_transaction_type" value="refund">
-                    <label class="form-check-label" for="refund">Refund</label>
+            <div class="col-md-3 mb-3 d-none" id="advancedTransactionType">
+                <label class="form-label">Advanced Transaction Type</label>
+                <div class="d-flex">
+                    <div class="form-check me-3">
+                        <input type="radio" class="form-check-input" id="refund" name="advanced_transaction_type" value="refund">
+                        <label class="form-check-label" for="refund">Refund</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" id="paylater" name="advanced_transaction_type" value="paylater">
+                        <label class="form-check-label" for="paylater">Pay Later</label>
+                    </div>
                 </div>
-                <div class="form-check">
-                    <input type="radio" class="form-check-input" id="paylater" name="advanced_transaction_type" value="paylater">
-                    <label class="form-check-label" for="paylater">Pay Later</label>
-                </div>
+                {% if errors.advanced_transaction_type %}
+                    <div class="text-danger">{{ errors.advanced_transaction_type }}</div>
+                {% endif %}
             </div>
-        </div>
-
-        <div class="col-md-3 mb-3" id="paymentMethod">
-            <label for="payment_method" class="form-label">Payment Method
-                <!-- Add Payment method modal -->
-                <a type="button" class="" data-bs-toggle="modal" data-bs-target="#addPaymentMethodModel">
-                    + new
-                </a>
-            </label>
-            <select class="form-select" id="payment_method" name="payment_method" required>
-                <option value="" disabled selected>Select Payment Method</option>
-                <!-- Options will be populated here -->
-            </select>
-        </div>
-        
+    
+            <div class="col-md-3 mb-3" id="paymentMethod">
+                <label for="payment_method" class="form-label">Payment Method
+                    <a type="button" class="" data-bs-toggle="modal" data-bs-target="#addPaymentMethodModel">+ new</a>
+                </label>
+                <select class="form-select" id="payment_method" name="payment_method" required>
+                    <option value="" disabled selected>Select Payment Method</option>
+                    <!-- Options will be populated here -->
+                </select>
+                {% if errors.payment_method %}
+                    <div class="text-danger">{{ errors.payment_method }}</div>
+                {% endif %}
+            </div>
     
             <!-- Additional Notes -->
             <div class="col-md-3 mb-3">
                 <label for="transaction_notes" class="form-label">Additional Notes</label>
                 <input type="text" class="form-control" id="transaction_notes" name="transaction_notes">
+                {% if errors.transaction_notes %}
+                    <div class="text-danger">{{ errors.transaction_notes }}</div>
+                {% endif %}
             </div>
         </div>
     
@@ -117,6 +134,9 @@
             <div class="col-md-3 mb-3">
                 <label for="refund_title" class="form-label">Refund Title</label>
                 <input type="text" class="form-control" id="refund_title" name="refund_title">
+                {% if errors.refund_title %}
+                    <div class="text-danger">{{ errors.refund_title }}</div>
+                {% endif %}
             </div>
             <div class="col-md-3 mb-3">
                 <label class="form-label">Refund Mode</label>
@@ -130,14 +150,23 @@
                         <label class="form-check-label" for="partial_refund">Partial Refund</label>
                     </div>
                 </div>
+                {% if errors.refund_mode %}
+                    <div class="text-danger">{{ errors.refund_mode }}</div>
+                {% endif %}
             </div>
             <div class="col-md-3 mb-3">
                 <label for="refund_amount" class="form-label">Refund Amount</label>
                 <input type="number" class="form-control" id="refund_amount" name="refund_amount" min="0.01" step="0.01">
+                {% if errors.refund_amount %}
+                    <div class="text-danger">{{ errors.refund_amount }}</div>
+                {% endif %}
             </div>
             <div class="col-md-3 mb-3">
                 <label for="refund_date" class="form-label">Refund Date</label>
                 <input type="date" class="form-control" id="refund_date" name="refund_date">
+                {% if errors.refund_date %}
+                    <div class="text-danger">{{ errors.refund_date }}</div>
+                {% endif %}
             </div>
         </div>
     
@@ -147,14 +176,23 @@
             <div class="col-md-3 mb-3">
                 <label for="paylater_title" class="form-label">Pay Later Title</label>
                 <input type="text" class="form-control" id="paylater_title" name="paylater_title">
+                {% if errors.paylater_title %}
+                    <div class="text-danger">{{ errors.paylater_title }}</div>
+                {% endif %}
             </div>
             <div class="col-md-3 mb-3">
                 <label for="paylater_amount" class="form-label">Pay Later Amount</label>
                 <input type="number" class="form-control" id="paylater_amount" name="paylater_amount" min="0.01" step="0.01">
+                {% if errors.paylater_amount %}
+                    <div class="text-danger">{{ errors.paylater_amount }}</div>
+                {% endif %}
             </div>
             <div class="col-md-3 mb-3">
                 <label for="due_date" class="form-label">Due Date</label>
                 <input type="date" class="form-control" id="due_date" name="due_date">
+                {% if errors.due_date %}
+                    <div class="text-danger">{{ errors.due_date }}</div>
+                {% endif %}
             </div>
         </div>
     
@@ -195,19 +233,19 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">Add New Sub Category</h1>
+          <h1 class="modal-title fs-5">Add New Sub Category</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
             <form id="addSubCategoryForm">
                 <div class="mb-3">
                     <label for="forCategoryValue" class="form-label">For Category Name</label>
-                    <div id="forCategoryValue" class="form-text "></div>
-                  </div>
+                    <div id="forCategoryValue" class="form-text"></div>
+                </div>
                 <div class="mb-3">
                   <label for="newSubCategoryName" class="form-label">New Sub Category Name</label>
-                  <input type="text" class="form-control" id="newSubCategoryName" name="newSubCategoryName" aria-describedby="emailHelp">
-                  <div id="newSubCategoryError" class="form-text text-danger">SubCategory name already exists</div>
+                  <input type="text" class="form-control" id="newSubCategoryName" name="newSubCategoryName">
+                  <small id="newSubCategoryError" class="text-danger" style="display:none;"></small>
                 </div>
                 <button type="button" class="btn btn-primary" id="submitSubCategory">Submit</button>
               </form>
@@ -250,258 +288,254 @@
 
 {% block extra_js %}
 <script>
-$(document).ready(function() {
-
-    const paymentType = $('input[name="transaction_type"]:checked').val(); 
-    const categoryName = $('#transaction_category option:selected').text();
-
-    $('#forTranTypeValue').text(paymentType);
-    $('#forCategoryValue').text(categoryName);
-
-
-    // CSRF Token
-    function getCookie(name) {
-        let cookieValue = null;
-        if (document.cookie && document.cookie !== '') {
-            const cookies = document.cookie.split(';');
-            for (let i = 0; i < cookies.length; i++) {
-                const cookie = cookies[i].trim();
-                if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                    break;
+    $(document).ready(function() {
+        // Get the CSRF token for secure AJAX requests
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
                 }
             }
+            return cookieValue;
         }
-        return cookieValue;
-    }
-    const csrftoken = getCookie('csrftoken');
-    const userId = '{{ user.userid }}';
-
-    // Elements
-    const $categorySelect = $('#transaction_category');
-    const $subcategorySelect = $('#transaction_subcategory');
-    const $subcategoryContainer = $('#subcategory_container');
-    const $paymentMethodSelect = $('#payment_method');
-
-    // ========== GET CATEGORIES ==========
-    function getAllCategories() {
-        $.ajax({
-            url: `/api/categories/${userId}`,
-            method: 'GET',
-            dataType: 'json',
-            success: function(data) {
-                $categorySelect.empty().append('<option value="" disabled selected>Select Category</option>');
-                $.each(data, function(index, category) {
-                    $categorySelect.append(
-                        `<option value="${category.category_id}">${category.category_name}</option>`
-                    );
-                });
-            },
-            error: function(xhr, status, error) {
-                console.error('Error fetching categories:', status, error);
-            }
-        });
-    }
-
-    function getAllSubCategoriesByCategory(categoryId){
-        
-        $subcategorySelect.empty().append('<option value="" disabled selected>Select Subcategory</option>');
-        $subcategoryContainer.show();
-
-        $.ajax({
-            url: `/api/subCategories/${categoryId}`,
-            method: 'GET',
-            dataType: 'json',
-            success: function(data) {
-                $.each(data, function(index, subcategory) {
-                    $subcategorySelect.append(
-                        `<option value="${subcategory.subcategory_id}">${subcategory.subcategory_name}</option>`
-                    );
-                });
-            },
-            error: function(xhr, status, error) {
-                console.error('Error fetching subcategories:', status, error);
-            }
-        });
-    }
-
-    // ========== GET SUBCATEGORIES ON CATEGORY CHANGE ==========
-    $categorySelect.on('change', function() {
-        const categoryId = $(this).val();
-        getAllSubCategoriesByCategory(categoryId);
-    });
-
-    // ========== GET PAYMENT METHODS ==========
-    function getPaymentMethods(paymentType = null) {
-        $.ajax({
-            url: `/api/paymentMethods/${userId}`,
-            method: 'GET',
-            dataType: 'json',
-            success: function(data) {
-                $paymentMethodSelect.empty().append('<option value="" disabled selected>Select Payment Method</option>');
-
-                // Filter by payment_type if specified
-                const filteredData = paymentType 
-                    ? data.filter(method => method.payment_type === paymentType)
-                    : data;
-
-                $.each(filteredData, function(index, method) {
-                    $paymentMethodSelect.append(
-                        `<option value="${method.payment_method_id}">${method.payment_method_name}</option>`
-                    );
-                });
-            },
-            error: function(xhr, status, error) {
-                console.error('Error fetching payment methods:', status, error);
-            }
-        });
-    }
-
-
-    $('#submitPaymentMethod').on('click', function () {
-        debugger
-        const paymentMethodName = $('#newPaymentMethodName').val();
+        const csrftoken = getCookie('csrftoken');
         const userId = '{{ user.userid }}';
-        const paymentType = $('input[name="transaction_type"]:checked').val(); // "income" or "expense"
-
-        const data = {
-            payment_method_name: paymentMethodName,
-            user: userId,
-            payment_type: paymentType
-        };
-
-        $.ajax({
-            url: '/api/paymentMethods/add/',
-            type: 'POST',
-            headers: {
-                'X-CSRFToken': csrftoken
-            },
-            contentType: 'application/json',
-            data: JSON.stringify(data),
-            success: function (response) {
-                console.log('Payment method added:', response);
-                $('#addPaymentMethodModel').modal('hide');
-                $('#addPaymentMethodForm')[0].reset();
-                $('#newPaymentMethodError').hide();
-                getPaymentMethods(); // Refresh dropdown
-            },
-            error: function (xhr) {
-                console.error('Error:', xhr.responseText);
-                $('#newPaymentMethodError').show();
+    
+        // Elements
+        const $categorySelect = $('#transaction_category');
+        const $subcategorySelect = $('#transaction_subcategory');
+        const $subcategoryContainer = $('#subcategory_container');
+        const $paymentMethodSelect = $('#payment_method');
+    
+        // ========== GET CATEGORIES ==========
+        function getAllCategories() {
+            $.ajax({
+                url: `/api/categories/${userId}`,
+                method: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    $categorySelect.empty().append('<option value="" disabled selected>Select Category</option>');
+                    $.each(data, function(index, category) {
+                        $categorySelect.append(
+                            `<option value="${category.category_id}">${category.category_name}</option>`
+                        );
+                    });
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error fetching categories:', status, error);
+                }
+            });
+        }
+    
+        // ========== GET SUBCATEGORIES BY CATEGORY ==========
+        function getAllSubCategoriesByCategory(categoryId) {
+            $subcategorySelect.empty().append('<option value="" disabled selected>Select Subcategory</option>');
+            $subcategoryContainer.show();
+    
+            $.ajax({
+                url: `/api/subCategories/${categoryId}`,
+                method: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    $.each(data, function(index, subcategory) {
+                        $subcategorySelect.append(
+                            `<option value="${subcategory.subcategory_id}">${subcategory.subcategory_name}</option>`
+                        );
+                    });
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error fetching subcategories:', status, error);
+                }
+            });
+        }
+    
+        // ========== GET PAYMENT METHODS ==========
+        function getPaymentMethods(paymentType = null) {
+            let url = `/api/paymentMethods/${userId}/`;
+            if (paymentType) {
+                url += `?payment_type=${paymentType}`;
             }
+
+            $.ajax({
+                url: url,
+                method: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    $paymentMethodSelect.empty().append('<option value="" disabled selected>Select Payment Method</option>');
+                    $.each(data, function(index, method) {
+                        $paymentMethodSelect.append(
+                            `<option value="${method.payment_method_id}">${method.payment_method_name}</option>`
+                        );
+                    });
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error fetching payment methods:', status, error);
+                }
+            });
+        }
+    
+        // ========== EVENT LISTENERS ==========
+        // Get subcategories when category changes
+        $categorySelect.on('change', function() {
+            const categoryId = $(this).val();
+            getAllSubCategoriesByCategory(categoryId);
         });
-    });
-
-    // ========== SUBMIT NEW SUBCATEGORY ==========
-    $('#submitSubCategory').on('click', function() {
-        const subCategoryName = $('#newSubCategoryName').val();
-        const categoryId = $('#transaction_category').val(); 
-        const data = {
-            subcategory_name: subCategoryName,
-            category: categoryId
-        };
-
-        $.ajax({
-            url: '/api/subCategories/add/',  // Your correct URL
-            type: 'POST',
-            headers: {
-                'X-CSRFToken': csrftoken
-            },
-            contentType: 'application/json',
-            data: JSON.stringify(data),
-            success: function(response) {
-                console.log('SubCategory added:', response);
-                $('#addSubCategoryModel').modal('hide');
-                $('#addSubCategoryForm')[0].reset();
-                getAllSubCategoriesByCategory(categoryId);  // Optional function to refresh your dropdown list
-            },
-            error: function(xhr) {
-                console.error('Error:', xhr.responseText);
-                $('#newSubCategoryError').text(xhr.responseJSON.detail || "Something went wrong").show();
+    
+        // Submit new payment method
+        $('#submitPaymentMethod').on('click', function() {
+            const paymentMethodName = $('#newPaymentMethodName').val();
+            const paymentType = $('input[name="transaction_type"]:checked').val(); // "income" or "expense"
+    
+            const data = {
+                payment_method_name: paymentMethodName,
+                user: userId,
+                payment_type: paymentType
+            };
+    
+            $.ajax({
+                url: '/api/paymentMethods/add/',
+                type: 'POST',
+                headers: {
+                    'X-CSRFToken': csrftoken
+                },
+                contentType: 'application/json',
+                data: JSON.stringify(data),
+                success: function(response) {
+                    console.log('Payment method added:', response);
+                    $('#addPaymentMethodModel').modal('hide');
+                    $('#addPaymentMethodForm')[0].reset();
+                    $('#newPaymentMethodError').hide();
+                    getPaymentMethods(paymentType); // Refresh dropdown based on current transaction type
+                },
+                error: function(xhr) {
+                    console.error('Error:', xhr.responseText);
+                    $('#newPaymentMethodError').show();
+                }
+            });
+        });
+    
+        // Submit new subcategory
+        $('#submitSubCategory').on('click', function() {
+            const subCategoryName = $('#newSubCategoryName').val();
+            const categoryId = $('#transaction_category').val(); 
+    
+            const data = {
+                subcategory_name: subCategoryName,
+                category: categoryId
+            };
+    
+            $.ajax({
+                url: '/api/subCategories/add/',
+                type: 'POST',
+                headers: {
+                    'X-CSRFToken': csrftoken
+                },
+                contentType: 'application/json',
+                data: JSON.stringify(data),
+                success: function(response) {
+                    console.log('SubCategory added:', response);
+                    $('#addSubCategoryModel').modal('hide');
+                    $('#addSubCategoryForm')[0].reset();
+                    $('#newSubCategoryError').hide();
+                    getAllSubCategoriesByCategory(categoryId); // Refresh subcategory dropdown
+                },
+                error: function(xhr) {
+                    const errorResponse = JSON.parse(xhr.responseText);
+                    let errorMsg = errorResponse.detail || errorResponse.subcategory_name?.[0] || 'Something went wrong!';
+                    console.error('Error:', errorMsg);
+                    $('#newSubCategoryError').text(errorMsg).show(); // Show error message
+                }
+            });
+        });
+    
+        // Submit new category
+        $('#submitCategory').on('click', function() {
+            const categoryName = $('#newCategoryName').val();
+    
+            const data = {
+                category_name: categoryName,
+                user: userId
+            };
+    
+            $.ajax({
+                url: '/api/categories/add/',
+                type: 'POST',
+                headers: {
+                    'X-CSRFToken': csrftoken
+                },
+                contentType: 'application/json',
+                data: JSON.stringify(data),
+                success: function(response) {
+                    console.log('Category added:', response);
+                    $('#addCategoryModel').modal('hide');
+                    $('#addCategoryForm')[0].reset();
+                    getAllCategories(); // Reload categories list
+                },
+                error: function(xhr) {
+                    const errorResponse = JSON.parse(xhr.responseText);
+                    let errorMsg = errorResponse.detail || errorResponse.category_name?.[0] || 'Something went wrong!';
+                    console.error('Error:', errorMsg);
+                    $('#newCategoryError').text(errorMsg).show(); // Show error message
+                }
+            });
+        });
+    
+        // ========== ADVANCED TRANSACTION TYPE TOGGLE ==========
+        function togglePaymentMethod() {
+            if ($('input[name="advanced_transaction_type"]:checked').val() === "paylater") {
+                $("#paymentMethod").hide();
+                $('#payment_method').prop('required', false); // Remove required when paylater
+            } else {
+                $("#paymentMethod").show();
+                $('#payment_method').prop('required', true); // Add required when not paylater
             }
+        }
+    
+        $('input[name="advanced_transaction_type"]').change(togglePaymentMethod);
+        togglePaymentMethod(); // Initial call
+    
+        // ========== DATE DEFAULT TO TODAY ==========
+        let today = new Date().toISOString().split('T')[0];
+        $("#transaction_date").attr("max", today).val(today);
+    
+        // ========== TOGGLE ADVANCED FIELDS BASED ON TRANSACTION TYPE ==========
+        function toggleAdvancedOptions() {
+            if ($("#expense").is(":checked")) {
+                $("#advancedTransactionType").removeClass("d-none");
+            } else {
+                $("#advancedTransactionType").addClass("d-none");
+                $("#refundDetails, #payLaterDetails").addClass("d-none");
+            }
+        }
+    
+        $("input[name='transaction_type']").change(toggleAdvancedOptions);
+        $("input[name='advanced_transaction_type']").change(function() {
+            $("#refundDetails").toggleClass("d-none", $(this).val() !== "refund");
+            $("#payLaterDetails").toggleClass("d-none", $(this).val() !== "paylater");
         });
+    
+        // ========== INITIALIZE ALL ==========
+        getAllCategories();
+        $('#newPaymentMethodError').hide();
+
+        // Event listener for transaction type change
+        $("input[name='transaction_type']").change(function() {
+            const selectedPaymentType = $(this).val(); // Get the selected transaction type
+            getPaymentMethods(selectedPaymentType); // Refetch payment methods based on the selected type
+        });
+
+        // Initial fetch of payment methods based on the default selected transaction type
+        const initialPaymentType = $('input[name="transaction_type"]:checked').val();
+        getPaymentMethods(initialPaymentType);
+
     });
-
-
-    // ========== SUBMIT NEW CATEGORY ==========
-$('#submitCategory').on('click', function() {
-    const categoryName = $('#newCategoryName').val();
-    const userIdInput = $('#userId').val();
-
-    const data = {
-        category_name: categoryName,
-        user: userIdInput
-    };
-
-    $.ajax({
-        url: '/api/categories/add/',
-        type: 'POST',
-        headers: {
-            'X-CSRFToken': csrftoken
-        },
-        contentType: 'application/json',
-        data: JSON.stringify(data),
-        success: function(response) {
-            console.log('Category added:', response);
-            $('#addCategoryModel').modal('hide');
-            $('#addCategoryForm')[0].reset();
-            getAllCategories();  // Reload categories list
-        },
-        error: function(xhr) {
-            const errorResponse = JSON.parse(xhr.responseText);
-            let errorMsg = errorResponse.detail || errorResponse.category_name?.[0] || 'Something went wrong!';
-            
-            console.error('Error:', errorMsg);
-
-            $('#newCategoryError').text(errorMsg).show();  // Show error message
-        }
-    });
-});
-
-
-
-    // ========== ADVANCED TRANSACTION TYPE TOGGLE ==========
-    function togglePaymentMethod() {
-        if ($('input[name="advanced_transaction_type"]:checked').val() === "paylater") {
-            $("#paymentMethod").hide();
-            $('#payment_method').prop('required', false);  // Remove required when paylater
-        } else {
-            $("#paymentMethod").show();
-            $('#payment_method').prop('required', true);   // Add required when not paylater
-        }
-
-    }
-
-    $('input[name="advanced_transaction_type"]').change(togglePaymentMethod);
-    togglePaymentMethod(); // Initial call
-
-    // ========== DATE DEFAULT TO TODAY ==========
-    let today = new Date().toISOString().split('T')[0];
-    $("#transaction_date").attr("max", today).val(today);
-
-    // ========== TOGGLE ADVANCED FIELDS BASED ON TRANSACTION TYPE ==========
-    function toggleAdvancedOptions() {
-        if ($("#expense").is(":checked")) {
-            $("#advancedTransactionType").removeClass("d-none");
-        } else {
-            $("#advancedTransactionType").addClass("d-none");
-            $("#refundDetails, #payLaterDetails").addClass("d-none");
-        }
-    }
-
-    $("input[name='transaction_type']").change(toggleAdvancedOptions);
-    $("input[name='advanced_transaction_type']").change(function() {
-        $("#refundDetails").toggleClass("d-none", $(this).val() !== "refund");
-        $("#payLaterDetails").toggleClass("d-none", $(this).val() !== "paylater");
-    });
-
-    // ========== INITIALIZE ALL ==========
-    getAllCategories();
-    getPaymentMethods();
-    $('#newPaymentMethodError').hide();
-
-});
-</script>
+    </script>
 
 
 {% endblock %}
