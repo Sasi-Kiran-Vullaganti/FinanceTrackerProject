@@ -4,18 +4,90 @@
 
 {% block extra_css %}
 <style>
+    .dashboardSec1 {
+        text-align: center;
+        padding-top: 40px;
+        height: 250px;
+    }
+    .dashboardSec2 {
+        padding: 16px;
+        margin-top: -100px;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        background: white;
+    }
 </style>
 {% endblock %}
 
 {% block content %}
-<center class="mt-5">
-    <h3> Pay Later Dashboard</h3>
-<p>Under maintainence</p>
-</center>
+
+<div class="container-fluid">
+    <div class="row dashboardSec1 bg-warning">
+        <div class="col-12">
+            <h3>Welcome to Pay-Later Dashboard</h3>
+            <p>Ready to Manage Your Pay-Later Transactions</p>
+        </div>
+    </div>
+</div>
+<div class="container dashboardSec2">
+    <div class="row">
+        <div class="col-12">
+            <h3>Pay Later Details</h3>
+            <table border="1" class="table table-striped mt-4">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Amount</th>
+                        <th>Due Date</th>
+                        <th>Paid</th>
+                        <th>Transaction</th>
+                        <th>Action</th> <!-- New column for actions -->
+                        <th>Details</th>  <!-- New column for details -->
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for paylater in paylaters %}
+                        <tr>
+                            <td>{{ paylater.title }}</td>
+                            <td>{{ paylater.amount }}</td>
+                            <td>{{ paylater.due_date }}</td>
+                            <td>
+                                {% if paylater.paid %}
+                                    <i class="bi bi-check-circle text-success" title="Paid"></i>
+                                {% else %}
+                                    <i class="bi bi-x-circle text-danger" title="Not Paid"></i>
+                                {% endif %}
+                            </td>
+                            <td>{{ paylater.transaction.name }}</td>
+                            <td>
+                                {% if not paylater.paid %}
+                                    <button class="btn btn-warning btn-sm" onclick="payNow('{{ paylater.id }}')">Pay Now</button>
+                                {% else %}
+                                    <span class="text-muted">Paid</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <a href="" class="text-danger" title="View Details">
+                                    <i class="bi bi-arrow-right-circle"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
 {% endblock %}
 
 {% block extra_js %}
 <script>
-    console.log('Dashboard scripts added')
+    console.log('Dashboard scripts added');
+
+    function payNow(paylaterId) {
+        // Implement the payment logic here
+        alert('Initiating payment for PayLater ID: ' + paylaterId);
+        // You can redirect to a payment page or open a modal for payment
+    }
 </script>
 {% endblock %}

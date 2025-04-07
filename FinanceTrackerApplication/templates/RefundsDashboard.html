@@ -4,18 +4,86 @@
 
 {% block extra_css %}
 <style>
+    .dashboardSec1 {
+        text-align: center;
+        padding-top: 40px;
+        height: 250px;
+    }
+    .dashboardSec2 {
+        padding: 16px;
+        margin-top: -100px;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        background: white;
+    }
 </style>
 {% endblock %}
 
 {% block content %}
-<center class="mt-5">
-    <h3> Refunds Dashboard</h3>
-<p>Under maintainence</p>
-</center>
+
+<div class="container-fluid">
+    <div class="row dashboardSec1 bg-info">
+        <div class="col-12">
+            <h3>Welcome to Refunds Dashboard</h3>
+            <p>Track Your Refunds and Stay Informed</p>
+        </div>
+    </div>
+</div>
+<div class="container dashboardSec2">
+    <div class="row">
+        <div class="col-12">
+            <h2 class="mb-3">Refund Details</h2>
+            <table border="1" class="table table-striped mt-4">
+                <thead>
+                    <tr>
+                        <th>Refund Title</th>
+                        <th>Transaction</th>
+                        <th>Amount</th>
+                        <th>Due Date</th>
+                        <th>Refunded</th>
+                        <th>Received Refund</th>
+                        <th>Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for refund in refunds %}
+                    <tr>
+                        <td>{{ refund.title }}</td>
+                        <td>{{ refund.transaction.name }}</td>
+                        <td>{{ refund.amount }}</td>
+                        <td>{{ refund.refund_date }}</td>
+                        <td>
+                            {% if refund.refunded %}
+                                <i class="bi bi-check-circle text-success" title="Refunded"></i>
+                            {% else %}
+                                <i class="bi bi-x-circle text-danger" title="Not Refunded"></i>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <button class="btn btn-info" >Received</button>
+                        </td>
+                        <td>
+                            <a href="" class="text-danger" title="View Details">
+                                <i class="bi bi-arrow-right-circle"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
 {% endblock %}
 
 {% block extra_js %}
 <script>
-    console.log('Dashboard scripts added')
+    console.log('Dashboard scripts added');
+
+    function payNow(paylaterId) {
+        // Implement the payment logic here
+        alert('Initiating payment for PayLater ID: ' + paylaterId);
+        // You can redirect to a payment page or open a modal for payment
+    }
 </script>
 {% endblock %}
