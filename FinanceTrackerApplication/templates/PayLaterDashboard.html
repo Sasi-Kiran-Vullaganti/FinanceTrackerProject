@@ -60,7 +60,7 @@
                             <td>{{ paylater.transaction.name }}</td>
                             <td>
                                 {% if not paylater.paid %}
-                                    <button class="btn btn-warning btn-sm" onclick="payNow('{{ paylater.id }}')">Pay Now</button>
+                                    <button class="btn btn-warning btn-sm" onclick="payNow('{{ paylater.paylaterid }}')">Pay Now</button>
                                 {% else %}
                                     <span class="text-muted">Paid</span>
                                 {% endif %}
@@ -77,7 +77,28 @@
         </div>
     </div>
 </div>
-
+<!-- PayLater Payment Modal -->
+<div class="modal fade" id="payLaterModal" tabindex="-1" aria-labelledby="payLaterModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Pay Later Payment</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p><strong>Title:</strong> <span id="modalTitle"></span></p>
+          <p><strong>Amount:</strong> ₹<span id="modalAmount"></span></p>
+          <p><strong>Due Date:</strong> <span id="modalDueDate"></span></p>
+          <input type="hidden" id="payLaterId">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success" onclick="payLaterConfirm()">Pay</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
 {% endblock %}
 
 {% block extra_js %}
@@ -85,9 +106,38 @@
     console.log('Dashboard scripts added');
 
     function payNow(paylaterId) {
-        // Implement the payment logic here
-        alert('Initiating payment for PayLater ID: ' + paylaterId);
-        // You can redirect to a payment page or open a modal for payment
-    }
+    $.ajax({
+        url: "{% url 'getPayLaterDetails' %}",  // Django URL to get PayLater details
+        type: "GET",
+        data: {
+            paylaterid: paylaterId
+        },
+        success: function(response) {
+            $("#modalTitle").text(response.title);
+            $("#modalAmount").text(response.amount);
+            $("#modalDueDate").text(response.due_date);
+            $("#payLaterId").val(paylaterId);
+            $("#payLaterModal").modal('show');
+        }
+    });
+}
+
+function payLaterConfirm() {
+    var paylaterId = $("#payLaterId").val();
+    $.ajax({
+        url: "{% url 'payLaterPayment' %}",  // Django URL to update status
+        type: "POST",
+        data: {
+            paylaterid: paylaterId,
+            csrfmiddlewaretoken: '{{ csrf_token }}'
+        },
+        success: function(response) {
+            if(response.status == "success"){
+                location.reload();  // Reload page after payment
+            }
+        }
+    });
+}
+
 </script>
 {% endblock %}

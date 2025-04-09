@@ -15,7 +15,7 @@ def transactionDashboard(request):
     userid = request.session.get("user_id")
     user = getUserData(userid)
     transactions = (
-        Transaction.objects.filter(user=user)
+        Transaction.objects.filter(user=user,status=True)
         .select_related(
             'category', 
             'subcategory', 
@@ -120,7 +120,7 @@ def addTransaction(request):
 
         # Validate refund fields if advanced_transaction_type is 'refund'
         if advanced_transaction_type == 'refund' and transaction_type == 'expense':
-            if not refund_title or not (3 <= len(refund_title) <= 12):
+            if not refund_title or not (3 <= len(refund_title) <= 15):
                 errors.append("Refund title is required and must be between 3 and 12 characters.")
             if not refund_mode:
                 errors.append("Refund mode is required.")
@@ -131,14 +131,14 @@ def addTransaction(request):
             else:
                 try:
                     refund_date_obj = datetime.strptime(refund_date, '%Y-%m-%d')
-                    if refund_date_obj > datetime.now():
-                        errors.append("Refund date cannot be in the future.")
+                    if refund_date_obj < datetime.now():
+                        errors.append("Refund date cannot be in the past.")
                 except ValueError:
                     errors.append("Refund date must be in the format YYYY-MM-DD.")
 
         # Validate paylater fields if advanced_transaction_type is 'paylater'
         if advanced_transaction_type == 'paylater' and transaction_type == 'expense':
-            if not paylater_title or not (3 <= len(paylater_title) <= 12):
+            if not paylater_title or not (3 <= len(paylater_title) <= 20):
                 errors.append("Paylater title is required and must be between 3 and 12 characters.")
             if not paylater_amount or not paylater_amount.isdigit() or int(paylater_amount) <= 0:
                 errors.append("Paylater amount is required and must be a positive number.")
@@ -186,6 +186,10 @@ def addTransaction(request):
                 due_date=due_date
             )
 
+        statusVal = True
+        if advanced_transaction_type == 'paylater':
+            statusVal = False
+
         # Create Transaction
         transaction_instance = Transaction.objects.create(
             name=transaction_name,
@@ -200,6 +204,7 @@ def addTransaction(request):
             expense_type=advanced_transaction_type or 'normal',
             refund=refund_instance,
             paylater=paylater_instance,
+            status = statusVal
         )
 
         # Update Refund / PayLater with transaction link
