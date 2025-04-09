@@ -132,6 +132,9 @@
                         </td>
                         <td>{{ txn.notes }}</td>
                         <td>{{ txn.txn_date }}</td>
+                        <td>
+                            <a href="{% url 'TransactionDetails' txn.txnid %}" class="btn btn-sm btn-info">View</a>
+                        </td>                        
                     </tr>
                 {% endfor %}
             </tbody>

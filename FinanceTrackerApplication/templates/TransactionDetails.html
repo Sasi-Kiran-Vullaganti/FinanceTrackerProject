@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+
+{% block title %}Transaction Details{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Transaction Details</h2>
+
+    <table class="table table-bordered">
+        <tr>
+            <th>Name</th>
+            <td>{{ transaction.name }}</td>
+        </tr>
+        <tr>
+            <th>Amount</th>
+            <td>{{ transaction.amount }}</td>
+        </tr>
+        <tr>
+            <th>Type</th>
+            <td>{{ transaction.type|title }}</td>
+        </tr>
+        <tr>
+            <th>Category</th>
+            <td>{{ transaction.category.category_name }}</td>
+        </tr>
+        <tr>
+            <th>Subcategory</th>
+            <td>{{ transaction.subcategory.subcategory_name }}</td>
+        </tr>
+        <tr>
+            <th>Payment Method</th>
+            <td>{{ transaction.payment_method.payment_method_name }}</td>
+        </tr>
+        <tr>
+            <th>Expense Type</th>
+            <td>{{ transaction.expense_type|title }}</td>
+        </tr>
+        <tr>
+            <th>Notes</th>
+            <td>{{ transaction.notes }}</td>
+        </tr>
+        <tr>
+            <th>Date</th>
+            <td>{{ transaction.txn_date }}</td>
+        </tr>
+    </table>
+
+    {% if refund_details %}
+        <h3>Refund Details</h3>
+        <table class="table table-bordered">
+            <tr>
+                <th>Title</th>
+                <td>{{ refund_details.title }}</td>
+            </tr>
+            <tr>
+                <th>Mode</th>
+                <td>{{ refund_details.mode }}</td>
+            </tr>
+            <tr>
+                <th>Amount</th>
+                <td>{{ refund_details.amount }}</td>
+            </tr>
+            <tr>
+                <th>Refund Date</th>
+                <td>{{ refund_details.refund_date }}</td>
+            </tr>
+            <tr>
+                <th>Refunded</th>
+                <td>{{ refund_details.refunded }}</td>
+            </tr>
+        </table>
+    {% endif %}
+
+    {% if paylater_details %}
+        <h3>Pay Later Details</h3>
+        <table class="table table-bordered">
+            <tr>
+                <th>Title</th>
+                <td>{{ paylater_details.title }}</td>
+            </tr>
+            <tr>
+                <th>Amount</th>
+                <td>{{ paylater_details.amount }}</td>
+            </tr>
+            <tr>
+                <th>Due Date</th>
+                <td>{{ paylater_details.due_date }}</td>
+            </tr>
+            <tr>
+                <th>Paid</th>
+                <td>{{ paylater_details.paid }}</td>
+            </tr>
+        </table>
+    {% endif %}
+</div>
+{% endblock %}

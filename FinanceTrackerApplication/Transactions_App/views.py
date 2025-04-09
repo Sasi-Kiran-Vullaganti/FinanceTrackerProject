@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,get_object_or_404
 from userModule_App.userValidations import checkLoginStatus 
 from userModule_App.models import UserProfile
 from userModule_App.views import getUserData
@@ -216,3 +216,17 @@ def addTransaction(request):
 
 
     return render(request,'addTransaction.html',{'user':user})
+
+def TransactionDetails(request, txn_id):
+    transaction = get_object_or_404(Transaction, txnid=txn_id)
+
+    # Check if Refund or PayLater exists for this transaction
+    refund_details = Refund.objects.filter(transaction=transaction).first()
+    paylater_details = PayLater.objects.filter(transaction=transaction).first()
+
+    context = {
+        'transaction': transaction,
+        'refund_details': refund_details,
+        'paylater_details': paylater_details,
+    }
+    return render(request,'TransactionDetails.html',context)
