@@ -1,0 +1,70 @@
+/* ===== BASE STYLES ===== */
+:root {
+    --primary-color: #6c5ce7;
+    --secondary-color: #f4f6f8;
+    --danger-color: #e74a3b;
+    --warning-color: #f6c23e;
+    --light-color: #f4f6f8;
+    --dark-color: #343a40;
+    --gray-color: #858796;
+    --brand-color: #ffd966;
+    --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: var(--font-main);
+    background-color: var(--light-color);
+    color: var(--dark-color);
+  }
+
+  a{
+    color: var(--primary-color);
+    text-decoration: none;
+  }
+
+  /* Navbar styles */
+
+  .navbar-brand{
+    font-family: 'Manrope', 'Inter', 'Segoe UI', sans-serif;
+    font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+    font-weight: 800;
+    color: var(--brand-color) !important;
+    letter-spacing: 0.5px;
+  }
+  .navbarStyle{
+    background-color: var(--primary-color);
+  }
+  .nav-link{
+    color: var(--light-color);
+    letter-spacing: 0.5px;
+  }
+  .active{
+    text-decoration: underline;
+    text-underline-offset: 6px; 
+    color: var(--brand-color) !important;
+  }
+  .nav-link:hover{
+    color: var(--brand-color) !important;
+    font-weight: 500;
+  }
+
+
+  /* ButtonStyles */
+  .primary-btn, .primary-btn:hover{
+    color: var(--light-color);
+    background-color:var(--primary-color);
+  }
+  .primary-outline-btn, .primary-outline-btn:hover{
+    background-color: var(--light-color);
+    color:var(--primary-color);
+    border:1px solid var(--primary-color); 
+  }
+  .teritiary-btn, .teritiary-btn:hover{
+    background-color: var(--light-color);
+    color:var(--primary-color);
+  }
+  .button-container{
+    gap:16px;
+  }

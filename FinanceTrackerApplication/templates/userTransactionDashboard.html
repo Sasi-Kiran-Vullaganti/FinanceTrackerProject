@@ -4,9 +4,6 @@
 
 {% block extra_css %}
 <style>
-    body{
-        font-family: Montserrat;
-    }
     .summary-table {
         width: 100%;
         border-collapse: collapse;
@@ -105,9 +102,11 @@
             </thead>
             <tbody>
                 {% for txn in transactions %}
-                    <tr class="{% if txn.type == 'income' %}table-success{% elif txn.type == 'expense' %}table-danger{% endif %}">
+                    <tr class="">
                         <td>{{ txn.name }}</td>
-                        <td>{{ txn.amount }}</td>
+                        <td class="{% if txn.type == 'income' %}text-success{% elif txn.type == 'expense' %}text-danger{% endif %}">
+                            {{ txn.amount }}
+                        </td>
                         <td>{{ txn.type|title }}</td>
                         <td>
                             {% if txn.category %}
