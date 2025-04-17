@@ -4,6 +4,19 @@
 
 {% block extra_css %}
 <style>
+.mainHeader{
+    font-size:20px;
+    font-weight: 600;
+    color: black;
+}
+a{
+    color: rgb(159, 5, 248);
+    text-decoration: underline;
+}
+.form-check-input:checked {
+    background-color: #000000;
+    border-color: #151515;
+}
 </style>
 {% endblock %}
 
@@ -11,7 +24,7 @@
 
 
 <div class="container">
-    <h1>Add new transaction</h1>
+    <h2 class="mainHeader mt-3">Add new transaction</h2>
     <form action="addTransaction" method="post" class="container">
         {% csrf_token %}
         <div class="row g-3 align-items-center mt-3">
@@ -64,7 +77,7 @@
             <!-- Transaction Category -->
             <div class="col-md-3 mb-3">
                 <label for="transaction_category" class="form-label">Transaction Category
-                    <a type="button" class="" data-bs-toggle="modal" data-bs-target="#addCategoryModel">+ new</a>
+                    <a type="button" class="" data-bs-toggle="modal" data-bs-target="#addCategoryModel">+ New</a>
                 </label>
                 <select class="form-select" id="transaction_category" name="transaction_category" required>
                     <option value="" disabled selected>Select Category</option>
@@ -77,7 +90,7 @@
             <!-- Placeholder for Subcategory Dropdown -->
             <div id="subcategory_container" class="col-md-3 mb-3" style="display: none;">
                 <label for="transaction_subcategory" class="form-label">Transaction Subcategory
-                    <a type="button" class="" data-bs-toggle="modal" data-bs-target="#addSubCategoryModel">+ new</a>
+                    <a type="button" class="" data-bs-toggle="modal" data-bs-target="#addSubCategoryModel">+ New</a>
                 </label>
                 <select class="form-select" id="transaction_subcategory" name="transaction_subcategory">
                     <option value="" disabled selected>Select Subcategory</option>
@@ -107,7 +120,7 @@
     
             <div class="col-md-3 mb-3" id="paymentMethod">
                 <label for="payment_method" class="form-label">Payment Method
-                    <a type="button" class="" data-bs-toggle="modal" data-bs-target="#addPaymentMethodModel">+ new</a>
+                    <a type="button" class="" data-bs-toggle="modal" data-bs-target="#addPaymentMethodModel">+ New</a>
                 </label>
                 <select class="form-select" id="payment_method" name="payment_method" required>
                     <option value="" disabled selected>Select Payment Method</option>
@@ -199,7 +212,7 @@
         <div class="row mt-3">
             <!-- Submit Button -->
             <div class="col-md-2">
-                <button type="submit" class="btn btn-primary w-100">Submit Transaction</button>
+                <button type="submit" class="btn btn-dark w-100">Submit Transaction</button>
             </div>
         </div>
     </form>
@@ -221,7 +234,7 @@
                   <input type="text" class="form-control" id="newCategoryName" name="newCategoryName" aria-describedby="emailHelp">
                   <small id="newCategoryError" class="text-danger" style="display:none;"></small>
                 </div>
-                <button type="button" class="btn btn-primary" id="submitCategory">Submit</button>
+                <button type="button" class="btn btn-dark" id="submitCategory">Submit</button>
               </form>
         </div>
       </div>
@@ -247,7 +260,7 @@
                   <input type="text" class="form-control" id="newSubCategoryName" name="newSubCategoryName">
                   <small id="newSubCategoryError" class="text-danger" style="display:none;"></small>
                 </div>
-                <button type="button" class="btn btn-primary" id="submitSubCategory">Submit</button>
+                <button type="button" class="btn btn-dark" id="submitSubCategory">Submit</button>
               </form>
         </div>
       </div>
@@ -273,7 +286,7 @@
                       <input type="text" class="form-control" id="newPaymentMethodName" name="newPaymentMethodName" aria-describedby="emailHelp">
                       <div id="newPaymentMethodError" class="form-text text-danger">Paymnt Method already exists</div>
                     </div>
-                    <button type="button" class="btn btn-primary" id="submitPaymentMethod">Submit</button>
+                    <button type="button" class="btn btn-dark" id="submitPaymentMethod">Submit</button>
                   </form>
             </div>
           </div>

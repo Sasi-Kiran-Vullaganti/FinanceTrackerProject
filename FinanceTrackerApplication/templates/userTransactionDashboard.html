@@ -4,6 +4,9 @@
 
 {% block extra_css %}
 <style>
+    body{
+        font-family: Montserrat;
+    }
     .summary-table {
         width: 100%;
         border-collapse: collapse;
@@ -18,12 +21,16 @@
     }
 
     .summary-table th {
-        background-color: #f8f9fa;
-        font-size: 20px;
+        background-color: #ffffff;
     }
 
-    .summary-table td {
-        font-size: 18px;
+    th{
+        font-size: 16px !important;
+        font-weight: 500;
+    }
+    td {
+        font-size: 14px;
+        font-weight: 400;
     }
     .dashboardSec1 {
         text-align: center;
@@ -31,31 +38,32 @@
         height: 250px;
     }
     .dashboardSec2 {
-        padding: 8px;
+        padding: 8px 16px;
         margin-top: -100px !important;
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
         background: white;
+        border-radius: 12px;
     }
 </style>
 {% endblock %}
 
 {% block content %}
 <div class="container-fluid">
-    <div class="row dashboardSec1 bg-success " style="color: white;">
+    <div class="row dashboardSec1 bg-dark " style="color: white;">
         <div class="col-12">
             <h3>Welcome to Transactions Dashboard</h3>
             <p>Track Your Refunds and Stay Informed</p>
         </div>
     </div>
 </div>
-<div class="container mt-4 dashboardSec2">   
+<div class="container mt-4 mb-4 dashboardSec2">   
     <div class="row mt-4 mb-4">
         
         <div class="col-6 mb-2">
             <h3>Transaction Dashboard</h3>
         </div> 
-        <div class="col-6 mx-auto">
-            <a href="{% url 'addTransaction' %}" class="btn btn-primary ms-auto">+ Add New Transaction</a>
+        <div class="col-6 mx-auto" style=" text-align: end; ">
+            <a href="{% url 'addTransaction' %}" class="btn btn-dark ms-auto">+ Add New Transaction</a>
         </div>
         <div class="col-12">
             <table class="summary-table">
@@ -79,8 +87,8 @@
                 </tbody>
             </table>
         </div>
-        <div class="col-12">
-            <h2 class="mb-3">All Transactions</h2>
+        <div class="col-12 mt-3">
+            <h3 class="mb-3">All Transactions</h3>
         <table border="1" class="table table-striped mb-3">
             <thead>
                 <tr>
@@ -141,7 +149,7 @@
         </table>        
 
 
-        <h2 class="mb-3">Refund Details</h2>
+        <h3 class="mb-3">Refund Details</h3>
         <table border="1" class="table table-striped">
             <thead>
                 <tr>
@@ -167,7 +175,7 @@
             </tbody>
         </table>
 
-        <h2 class="mb-3">Pay Later Details</h2>
+        <h3 class="mb-3">Pay Later Details</h3>
         <table border="1" class="table table-striped">
             <thead>
                 <tr>
