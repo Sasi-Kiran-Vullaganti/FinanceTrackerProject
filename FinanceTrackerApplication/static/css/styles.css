@@ -71,3 +71,7 @@
   .button-container{
     gap:16px;
   }
+
+  .details-container{
+    border: 1px solid var(--primary-color);
+  }

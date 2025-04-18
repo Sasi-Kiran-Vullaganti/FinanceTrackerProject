@@ -46,7 +46,7 @@
 
 {% block content %}
 <div class="container-fluid">
-    <div class="row dashboardSec1 bg-dark " style="color: white;">
+    <div class="row dashboardSec1 " style="color: white;">
         <div class="col-12">
             <h3>Welcome to Transactions Dashboard</h3>
             <p>Track Your Refunds and Stay Informed</p>
@@ -60,7 +60,7 @@
             <h3>Transaction Dashboard</h3>
         </div> 
         <div class="col-6 mx-auto" style=" text-align: end; ">
-            <a href="{% url 'addTransaction' %}" class="btn btn-dark ms-auto">+ Add New Transaction</a>
+            <a href="{% url 'addTransaction' %}" class="btn primary-btn ms-auto">+ Add New Transaction</a>
         </div>
         <div class="col-12">
             <table class="summary-table">
@@ -105,7 +105,7 @@
                     <tr class="">
                         <td>{{ txn.name }}</td>
                         <td class="{% if txn.type == 'income' %}text-success{% elif txn.type == 'expense' %}text-danger{% endif %}">
-                            {{ txn.amount }}
+                            {% if txn.type == 'income' %}+ {{ txn.amount }}{% elif txn.type == 'expense' %}- {{ txn.amount }}{% endif %}
                         </td>
                         <td>{{ txn.type|title }}</td>
                         <td>
@@ -140,7 +140,7 @@
                         <td>{{ txn.notes }}</td>
                         <td>{{ txn.txn_date }}</td>
                         <td>
-                            <a href="{% url 'TransactionDetails' txn.txnid %}" class="btn btn-sm btn-info">View</a>
+                            <a href="{% url 'TransactionDetails' txn.txnid %}" class="btn btn-sm primary-outline-btn"><i class="bi bi-eye-fill"></i></a>
                         </td>                        
                     </tr>
                 {% endfor %}
