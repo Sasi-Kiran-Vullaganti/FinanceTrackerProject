@@ -8,10 +8,58 @@
 {% endblock %}
 
 {% block content %}
-<center class="mt-5">
-    <h3> Reports Dashboard</h3>
-<p>Under maintainence</p>
-</center>
+
+<div class="container mt-3 details-container">
+    <div class="row p-3" style="color: var(--primary-color);">
+        <div class="col-12">
+            <h3>Reports Dashboard</h3>
+        </div><hr>
+        <div class="fieldsBlock row" style="color: black;">
+            <div class="col-md-6">
+                Select Transaction Type
+                <div class="d-flex gap-3 align-items-center mt-3">
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" name="transactionType" id="all" value="all" checked>
+                      <label class="form-check-label" for="all">All</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" name="transactionType" id="income" value="income">
+                      <label class="form-check-label" for="income">Income</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" name="transactionType" id="expense" value="expense">
+                      <label class="form-check-label" for="expense">Expense</label>
+                    </div>
+                  </div>
+                  
+            </div>
+            <div class="col-md-6 mt-3">
+                Select Transaction Date Range
+                <div class="d-flex gap-3 align-items-center mt-3">
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" name="filter" id="thisMonth" value="thisMonth" checked>
+                      <label class="form-check-label" for="thisMonth">This Month</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" name="filter" id="byDate" value="byDate">
+                      <label class="form-check-label" for="byDate">By Date</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" name="filter" id="byMonth" value="byMonth">
+                      <label class="form-check-label" for="byMonth">By Month</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" name="filter" id="byYear" value="byYear">
+                      <label class="form-check-label" for="byYear">By Year</label>
+                    </div>
+                  </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</div>
+
 {% endblock %}
 
 {% block extra_js %}
