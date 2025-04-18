@@ -21,7 +21,7 @@
 {% block content %}
 
 <div class="container-fluid">
-    <div class="row dashboardSec1 bg-warning">
+    <div class="row dashboardSec1">
         <div class="col-12">
             <h3>Welcome to Pay-Later Dashboard</h3>
             <p>Ready to Manage Your Pay-Later Transactions</p>
@@ -60,14 +60,16 @@
                             <td>{{ paylater.transaction.name }}</td>
                             <td>
                                 {% if not paylater.paid %}
-                                    <button class="btn btn-warning btn-sm" onclick="payNow('{{ paylater.paylaterid }}')">Pay Now</button>
+                                    <button class="btn primary-btn" onclick="payNow('{{ paylater.paylaterid }}')">Pay Now</button>
                                 {% else %}
                                     <span class="text-muted">Paid</span>
                                 {% endif %}
                             </td>
                             <td>
-                                <a href="{% url 'TransactionDetails' paylater.transaction.txnid %}" class="text-danger" title="View Details">
-                                    <i class="bi bi-arrow-right-circle"></i>
+                                <a href="{% url 'TransactionDetails' paylater.transaction.txnid %}" title="View Details">
+                                    <div class="d-flex justify-content-center">
+                                        <i class="bi bi-eye-fill"></i>
+                                    </div>
                                 </a>
                             </td>
                         </tr>

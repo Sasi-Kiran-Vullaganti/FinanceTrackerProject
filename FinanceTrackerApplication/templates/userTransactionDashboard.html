@@ -46,7 +46,7 @@
 
 {% block content %}
 <div class="container-fluid">
-    <div class="row dashboardSec1 " style="color: white;">
+    <div class="row dashboardSec1">
         <div class="col-12">
             <h3>Welcome to Transactions Dashboard</h3>
             <p>Track Your Refunds and Stay Informed</p>
@@ -147,56 +147,6 @@
             </tbody>
         </table>        
 
-
-        <h3 class="mb-3">Refund Details</h3>
-        <table border="1" class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Title</th>
-                    <th>Mode</th>
-                    <th>Amount</th>
-                    <th>Refund Date</th>
-                    <th>Refunded</th>
-                    <th>Transaction</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for refund in refunds %}
-                    <tr>
-                        <td>{{ refund.title }}</td>
-                        <td>{{ refund.mode }}</td>
-                        <td>{{ refund.amount }}</td>
-                        <td>{{ refund.refund_date }}</td>
-                        <td>{{ refund.refunded }}</td>
-                        <td>{{ refund.transaction.name }}</td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-
-        <h3 class="mb-3">Pay Later Details</h3>
-        <table border="1" class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Title</th>
-                    <th>Amount</th>
-                    <th>Due Date</th>
-                    <th>Paid</th>
-                    <th>Transaction</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for paylater in paylaters %}
-                    <tr>
-                        <td>{{ paylater.title }}</td>
-                        <td>{{ paylater.amount }}</td>
-                        <td>{{ paylater.due_date }}</td>
-                        <td>{{ paylater.paid }}</td>
-                        <td>{{ paylater.transaction.name }}</td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
         </div>
     </div>
 </div>

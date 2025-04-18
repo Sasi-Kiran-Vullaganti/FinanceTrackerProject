@@ -21,7 +21,7 @@
 {% block content %}
 
 <div class="container-fluid">
-    <div class="row dashboardSec1 bg-info">
+    <div class="row dashboardSec1">
         <div class="col-12">
             <h3>Welcome to Refunds Dashboard</h3>
             <p>Track Your Refunds and Stay Informed</p>
@@ -59,11 +59,13 @@
                             {% endif %}
                         </td>
                         <td>
-                            <button class="btn btn-info" >Received</button>
+                            <button class="btn primary-btn" >Received</button>
                         </td>
                         <td>
-                            <a href="{% url 'TransactionDetails' refund.transaction.txnid %}" class="text-danger" title="View Details">
-                                <i class="bi bi-arrow-right-circle"></i>
+                            <a href="{% url 'TransactionDetails' refund.transaction.txnid %}" title="View Details">
+                                <div class="d-flex justify-content-center">
+                                    <i class="bi bi-eye-fill"></i>
+                                </div>
                             </a>
                         </td>
                     </tr>
