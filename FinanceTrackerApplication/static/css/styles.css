@@ -55,9 +55,6 @@
 
 
   /* ButtonStyles */
-  .btn{
-    margin: 6px auto;
-  }
   .primary-btn, .primary-btn:hover{
     color: var(--light-color);
     background-color:var(--primary-color);
@@ -78,6 +75,9 @@
     gap:16px;
   }
 
-  .details-container{
-    border: 1px solid var(--primary-color);
+  /* Headings */
+  h1{
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--primary-color);
   }

@@ -5,95 +5,156 @@
 {% block content %}
 
 <style>
+    :root {
+    --primary-color: #6c5ce7;
+    --secondary-color: #f4f6f8;
+    --danger-color: #e74a3b;
+    --warning-color: #f6c23e;
+    --light-color: #f4f6f8;
+    --dark-color: #343a40;
+    --gray-color: #858796;
+    --brand-color: #ffd966;
+    --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
     .mainHeader{
         font-size:20px;
         font-weight: 600;
         color: black;
     }
+    .page-header{
+        color:var(--primary-color);
+        font-size: 20px;
+        font-weight: 800;
+    }
     .details-container{
-        border: 1px solid var(--primary-color);
+        border: 2px solid var(--primary-color);
         background-color: white;
+        border-radius: 8px;
+    }
+    .details-row{
+        background: #f4f1fd;
+        padding: 12px;
+        border-radius: 8px;
+    }
+    .details-set{
+        display: flex;
+        flex-direction: column;
+    }
+    .detail-header{
+        font-size:16px;
+        font-weight: 600;
+        margin: 6px;
+        color: var(--primary-color);
+    }
+    .detail-value{
+        font-size: 14px;
+        margin:6px;
+        font-weight: bold;
     }
 </style>
 
 <div class="container mt-3">
-    <div class="row">
-        <div class="col-12">
-            <a class="" href="{% url 'transactionDashboard' %}"><i class="bi bi-arrow-left"></i> Transaction Details</a>
+    <div class="row align-items-center mb-3">
+        <div class="col d-flex align-items-center">
+          <a class="page-header d-flex align-items-center me-auto" href="{% url 'transactionDashboard' %}">
+            <i class="bi bi-arrow-left me-2"></i> Transaction Details
+          </a>
+          <button class="btn primary-btn ms-auto"><i class="bi bi-download me-2"></i>Download</button>
         </div>
-    </div>
+      </div>
+      
 </div>
 <div class="container details-container mt-3 p-4">
-    <div class="row mb-3">
+    <div class="row details-row mb-3">
         <h2  class="mainHeader">Transaction Details</h2>
-        <div class="col-md-6">
-            <span>Transaction ID : {{ transaction.txnid }}</span>
+        <div class="col-md-3 details-set">
+            <span class="detail-header">Transaction ID </span>
+            <span class="detail-value">{{ transaction.txnid }}</span>
         </div>
-        <div class="col-md-6">
-            <span>Transaction Name : {{ transaction.name }}</span>
+        <div class="col-md-3 details-set">
+            <span class="detail-header">Transaction Name</span>
+            <span class="detail-value">{{ transaction.name }}</span>
         </div>
-        <div class="col-md-6">
-            <span>Transaction Amount : {{ transaction.amount }}</span>
+        <div class="col-md-3 details-set">
+            <span class="detail-header">Transaction Amount</span>
+            <span class="detail-value">{{ transaction.amount }}</span>
         </div>
-        <div class="col-md-6">
-            <span>Transaction Type : {{ transaction.type|title }}</span>
+        <div class="col-md-3 details-set">
+            <span class="detail-header">Transaction Type</span>
+            <span class="detail-value">{{ transaction.type|title }}</span>
         </div>
-        <div class="col-md-6">
-            <span>Category : {{ transaction.category.category_name }}</span>
+        <div class="col-md-3 details-set">
+            <span class="detail-header">Category</span>
+            <span class="detail-value">{{ transaction.category.category_name }} </span>
         </div>
-        <div class="col-md-6">
-            <span>Sub Category : {{ transaction.subcategory.subcategory_name }}</span>
+        <div class="col-md-3 details-set">
+            <span class="detail-header">Sub Category</span>
+            <span class="detail-value">{{ transaction.subcategory.subcategory_name }}</span>
         </div>
-        <div class="col-md-6">
-            <span>Payment Method : {{ transaction.payment_method.payment_method_name }}</span>
+        <div class="col-md-3 details-set">
+            <span class="detail-header">Payment Method</span>
+            <span class="detail-value">{{ transaction.payment_method.payment_method_name }}</span>
         </div>
-        <div class="col-md-6">
-            <span>Expense Type : {{ transaction.expense_type|title }}</span>
+        <div class="col-md-3 details-set">
+            <span class="detail-header">Expense Type</span>
+            <span class="detail-value">{{ transaction.expense_type|title }}</span>
         </div>
-        <div class="col-md-6">
-            <span>Transaction Date : {{ transaction.txn_date }}</span>
+        <div class="col-md-3 details-set">
+            <span class="detail-header">Transaction Date</span>
+            <span class="detail-value">{{ transaction.txn_date }}</span>
         </div>
-        <div class="col-md-6">
-            <span>Transaction Notes : {{ transaction.notes }}</span>
+        <div class="col-md-3 details-set">
+            <span class="detail-header">Transaction Notes</span>
+            <span class="detail-value">{{ transaction.notes }}</span>
         </div>
     </div>
     {% if refund_details %}
-        <div class="row mb-3">
+        <div class="row details-row mb-3">
             <h2  class="mainHeader">Refund Details</h2>
-            <div class="col-md-6">
-                <span>Refund ID : {{ refund_details.refundid }}</span>
+            <div class="col-md-3 details-set">
+                <span class="detail-header">Refund ID</span>
+                <span class="detail-value">{{ refund_details.refundid }}</span>
             </div>
-            <div class="col-md-6">
-                <span>Refund Title : {{ refund_details.title }}</span>
+            <div class="col-md-3 details-set">
+                <span class="detail-header">Refund Title</span>
+                <span class="detail-value">{{ refund_details.title }}</span>
             </div>
-            <div class="col-md-6">
-                <span>Refund Mode : {{ refund_details.mode }}</span>
+            <div class="col-md-3 details-set">
+                <span class="detail-header">Refund Mode</span>
+                <span class="detail-value">{{ refund_details.mode }}</span>
             </div>
-            <div class="col-md-6">
-                <span>Refund Amount : {{ refund_details.amount }}</span>
+            <div class="col-md-3 details-set">
+                <span class="detail-header">Refund Amount</span>
+                <span class="detail-value">{{ refund_details.amount }}</span>
             </div>
-            <div class="col-md-6">
-                <span>Refund Date : {{ refund_details.refund_date }}</span>
+            <div class="col-md-3 details-set">
+                <span class="detail-header">Refund Date</span>
+                <span class="detail-value">{{ refund_details.refund_date }}</span>
             </div>
-            <div class="col-md-6">
-                <span>Refunded : {{ refund_details.refunded }}</span>
+            <div class="col-md-3 details-set">
+                <span class="detail-header">Refunded</span>
+                <span class="detail-value">{{ refund_details.refunded }}</span>
             </div>
         </div>
     {% endif %}
     {% if paylater_details %}
-        <div class="row mb-3">
+        <div class="row details-row mb-3">
             <h2  class="mainHeader">Pay Later Details</h2>
-            <div class="col-md-6">
-                <span>PayLater ID : {{ paylater_details.paylaterid }}</span>
+            <div class="col-md-3 details-set">
+                <span class="detail-header">PayLater ID</span>
+                <span class="detail-value">{{ paylater_details.paylaterid }}</span>
             </div>
-            <div class="col-md-6">
-                <span>PayLater Title : {{ paylater_details.title }}</span>
+            <div class="col-md-3 details-set">
+                <span class="detail-header">PayLater Title</span>
+                <span class="detail-value">{{ paylater_details.title }}</span>
             </div>
-            <div class="col-md-6">
-                <span>PayLater Due Date : {{ paylater_details.due_date }}</span>
+            <div class="col-md-3 details-set">
+                <span class="detail-header">PayLater Due Date</span>
+                <span class="detail-value">{{ paylater_details.due_date }}</span>
             </div>
-            <div class="col-md-6">
-                <span>PayLater Paid : {{ paylater_details.paid }}</span>
+            <div class="col-md-3 details-set">
+                <span class="detail-header">PayLater Paid</span>
+                <span class="detail-value">{{ paylater_details.paid }}</span>
             </div>
         </div>
     {% endif %}
