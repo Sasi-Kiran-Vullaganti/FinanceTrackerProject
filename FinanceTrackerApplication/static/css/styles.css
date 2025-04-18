@@ -55,6 +55,9 @@
 
 
   /* ButtonStyles */
+  .btn{
+    margin: 6px auto;
+  }
   .primary-btn, .primary-btn:hover{
     color: var(--light-color);
     background-color:var(--primary-color);

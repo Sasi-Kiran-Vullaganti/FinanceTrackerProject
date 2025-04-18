@@ -4,14 +4,66 @@
 
 {% block extra_css %}
 <style>
+    .btn{
+        margin:6px auto;
+    }
+    .close{
+        color: var(--primary-color);
+        background: none;
+        border: 1px solid;
+    }
+    .modal-title{
+        color:var(--primary-color);
+        font-size: 18px;
+        font-weight: 600;
+    }
 </style>
 {% endblock %}
 
 {% block content %}
-<center class="mt-5">
-    <h3> User Dashboard</h3>
-<p>Under maintainence</p>
-</center>
+<div class="container-fluid mt-3">
+    <div class="button-container">
+        <span class="btn primary-btn">This Month</span>
+        <span class="btn primary-outline-btn">Last 15 Days</span>
+        <span class="btn primary-outline-btn">Last week</span>
+        <span class="btn primary-outline-btn">Last 45 Days</span>
+        <span class="btn primary-outline-btn">Last 3 months</span>
+        <span class="btn primary-outline-btn">Last 6 months</span>
+        <span class="btn primary-outline-btn">Last year</span>
+        <button type="button" class= "btn primary-outline-btn" data-toggle="modal" data-target="#dateModal">Select Date <i class="bi bi-calendar3"></i> </button>
+    </div>
+    <!-- select Custom Date Modal -->
+    <div class="modal fade" id="dateModal" tabindex="-1" role="dialog" aria-labelledby="dateModal" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Select Date</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group row align-items-center">
+                    <label for="dateInput" class="col-md-3 col-form-label">Start Date : </label>
+                    <div class="col-md-9">
+                      <input type="date" class="form-control" id="dateInput" name="date">
+                    </div>
+                </div>
+                <div class="form-group row align-items-center mt-3">
+                    <label for="dateInput" class="col-md-3 col-form-label">End Date : </label>
+                    <div class="col-md-9">
+                      <input type="date" class="form-control" id="dateInput" name="date">
+                    </div>
+                </div>
+                  
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn primary-btn">Apply changes</button>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
 
 {% block extra_js %}
