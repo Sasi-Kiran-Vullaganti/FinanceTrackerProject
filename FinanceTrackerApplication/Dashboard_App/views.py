@@ -7,3 +7,9 @@ def userDashboard(request):
     if logincheck:
         return redirect('userLogin')
     return render(request,'userDashboard.html')
+
+def defaultRedirection(request):
+    logincheck = checkLoginStatus(request)
+    if logincheck:
+        return redirect('userLogin')
+    return redirect('userDashboard')
