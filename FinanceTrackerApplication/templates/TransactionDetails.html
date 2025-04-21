@@ -59,12 +59,12 @@
           <a class="page-header d-flex align-items-center me-auto" href="{% url 'transactionDashboard' %}">
             <i class="bi bi-arrow-left me-2"></i> Transaction Details
           </a>
-          <button class="btn primary-btn ms-auto"><i class="bi bi-download me-2"></i>Download</button>
+          <button class="btn primary-btn ms-auto" onclick="downloadDetailsAsImage()"><i class="bi bi-download me-2"></i>Download</button>
         </div>
       </div>
       
 </div>
-<div class="container details-container mt-3 p-4">
+<div class="container details-container mt-3 p-4" id="transaction-details-image">
     <div class="row details-row mb-3">
         <h2  class="mainHeader">Transaction Details</h2>
         <div class="col-md-3 details-set">
@@ -159,4 +159,16 @@
         </div>
     {% endif %}
 </div>
+<script>
+    function downloadDetailsAsImage() {
+        const element = document.getElementById("transaction-details-image");
+        html2canvas(element).then(function(canvas) {
+            const link = document.createElement("a");
+            link.download = "TransactionDetails.png";
+            link.href = canvas.toDataURL("image/png");
+            link.click();
+        });
+    }
+</script>
+
 {% endblock %}
