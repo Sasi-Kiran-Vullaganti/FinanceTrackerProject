@@ -1,21 +1,140 @@
 {% extends 'base.html' %}
 
-{% block title %}Login{% endblock %}
+{% block title %}User Profile{% endblock %}
 
 {% block extra_css %}
 <style>
+    .profile-container {
+        margin: 40px auto;
+        padding: 30px;
+        border: 2px solid #6c5ce7;
+        border-radius: 10px;
+        background-color: #f9f9f9;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .profile-header {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+    .profile-field {
+        font-weight: 600;
+        margin-top: 10px;
+        color: #333;
+    }
+    .profile-value {
+        font-weight: 400;
+        color: #555;
+    }
 </style>
 {% endblock %}
 
 {% block content %}
-<center class="mt-5">
-    <h3> UserProfile Page</h3>
-<p>Under maintainence</p>
-</center>
+<div class="profile-container container">
+    <div class="profile-header">User Profile</div>
+
+    <div class="row ">
+        <div class="col-md-3">
+            <div class="profile-field">Name:</div>
+            <div class="profile-value">{{ userData.name }}</div>
+        </div>
+
+       <div class="col-md-3">
+            <div class="profile-field">Email:</div>
+            <div class="profile-value">{{ userData.email }}</div>
+       </div>
+
+        <div class="col-md-3">
+            <div class="profile-field">Phone:</div>
+            <div class="profile-value">{{ userData.phone }}</div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="profile-field">Gender:</div>
+            <div class="profile-value">{{ userData.gender }}</div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="profile-field">Preferred Currency:</div>
+            <div class="profile-value">{{ userData.currency }}</div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="profile-field">Date Created:</div>
+            <div class="profile-value">{{ userData.date_created }}</div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="profile-field">Last Login:</div>
+            <div class="profile-value">{{ userData.last_login }}</div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="profile-field">Last Updated:</div>
+            <div class="profile-value">{{ userData.last_updated }}</div>
+        </div>
+    </div>
+    <hr>
+    <div class="row mt-3">
+        <h5 class="mb-3 profile-header">Transaction Summary by Category</h5>
+      
+        {% if category_data %}
+            {% for category in category_data %}
+                <div class="col-md-3 mb-4">
+                    <div class="card h-100 shadow-sm border-0 rounded-3">
+                        <div class="card-header primary-btn fw-semibold">
+                            {{ category.name }} — ₹{{ category.category_total }}
+                        </div>
+                        <div class="card-body p-2">
+                            {% if category.subcategories %}
+                                <ul class="list-group list-group-flush">
+                                    {% for sub in category.subcategories %}
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            {{ sub.name }}
+                                            <span class="badge bg-success rounded-pill">+ ₹{{ sub.income_total }}</span>
+                                            <span class="badge bg-danger rounded-pill">- ₹{{ sub.expense_total }}</span>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            {% else %}
+                                <p class="text-muted small">No subcategories.</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p class="text-muted">No transaction data available for categories.</p>
+        {% endif %}
+    </div>
+    <hr>
+    <!-- Transaction Summary by Payment Method -->
+    <div class="row mt-3">
+        <h5 class="mb-3 profile-header">Transaction Summary by Payment Method</h5>
+        
+        {% if payment_data %}
+            {% for payment in payment_data %}
+                <div class="col-md-3 mb-4">
+                    <div class="card h-100 shadow-sm border-0 rounded-3">
+                        <div class="card-header primary-btn fw-semibold">
+                            {{ payment.name }} ({{ payment.type|title }}) — ₹{{ payment.total }}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p class="text-muted">No transaction data available for payment methods.</p>
+        {% endif %}
+    </div>
+        
+    
+    
+      
+</div>
 {% endblock %}
 
 {% block extra_js %}
 <script>
-    console.log('Dashboard scripts added')
+    console.log('User profile script loaded')
 </script>
 {% endblock %}

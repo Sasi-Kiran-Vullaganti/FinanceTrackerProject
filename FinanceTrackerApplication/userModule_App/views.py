@@ -9,6 +9,8 @@ from .models import UserProfile
 from django.contrib.auth import authenticate, login
 from .userValidations import user_registration_validation 
 from userModule_App.userValidations import checkLoginStatus 
+from Transactions_App.models import Category,Subcategory,PaymentMethod,Transaction,Refund,PayLater
+from django.db.models import Sum
 
 def getUserData(userid):
     user = UserProfile.objects.get(userid=userid)
@@ -24,7 +26,62 @@ def UserProfileView(request):
     logincheck = checkLoginStatus(request)
     if logincheck:
         return redirect('userLogin')
-    return render(request,'UserProfile.html')
+    
+    userid = request.session.get("user_id")
+    user = getUserData(userid)
+    
+    # Get overall totals grouped by category and subcategory
+    category_data = []
+    categories = Category.objects.filter(user=user)
+    
+    for category in categories:
+        # Calculate total for income and expense by category
+        category_income_total = Transaction.objects.filter(user=user, category=category, type='income').aggregate(total=Sum('amount'))['total'] or 0
+        category_expense_total = Transaction.objects.filter(user=user, category=category, type='expense').aggregate(total=Sum('amount'))['total'] or 0
+        
+        # Calculate the total of income and expense for this category
+        category_total = category_income_total + category_expense_total
+        
+        subcategory_data = []
+        
+        # Calculate income and expense totals for each subcategory
+        subcategories = Subcategory.objects.filter(category=category)
+        for subcat in subcategories:
+            sub_income_total = Transaction.objects.filter(user=user, subcategory=subcat, type='income').aggregate(total=Sum('amount'))['total'] or 0
+            sub_expense_total = Transaction.objects.filter(user=user, subcategory=subcat, type='expense').aggregate(total=Sum('amount'))['total'] or 0
+            
+            subcategory_data.append({
+                'name': subcat.subcategory_name,
+                'income_total': sub_income_total,
+                'expense_total': sub_expense_total,
+            })
+        
+        category_data.append({
+            'name': category.category_name,
+            'income_total': category_income_total,
+            'expense_total': category_expense_total,
+            'category_total': category_total,  # Added the sum here
+            'subcategories': subcategory_data
+        })
+
+    # Payment method totals
+    payment_data = []
+    payment_methods = PaymentMethod.objects.filter(user=user)
+    for pm in payment_methods:
+        pm_total = Transaction.objects.filter(user=user, payment_method=pm).aggregate(total=Sum('amount'))['total'] or 0
+        payment_data.append({
+            'name': pm.payment_method_name,
+            'type': pm.payment_type,
+            'total': pm_total
+        })
+
+    context = {
+        "userData": user,
+        "category_data": category_data,
+        "payment_data": payment_data
+    }
+    return render(request, 'UserProfile.html', context)
+
 
 def ChangePassword(request):
     logincheck = checkLoginStatus(request)
