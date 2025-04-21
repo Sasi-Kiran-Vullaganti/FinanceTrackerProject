@@ -7,6 +7,7 @@ class Category(models.Model):
     category_id = models.AutoField(primary_key=True)
     category_name = models.CharField(max_length=255)
     user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+    visible = models.BooleanField(default=True)
 
     class Meta:
         unique_together = ('user', 'category_name')  
@@ -21,6 +22,7 @@ class Subcategory(models.Model):
     subcategory_id = models.AutoField(primary_key=True)
     subcategory_name = models.CharField(max_length=255)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name="subcategories")
+    visible = models.BooleanField(default=True)
 
     def __str__(self):
         return f"{self.subcategory_name} (Category: {self.category.category_name})"
@@ -35,6 +37,7 @@ class PaymentMethod(models.Model):
     payment_method_name = models.CharField(max_length=255)
     user = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name="payment_methods")
     payment_type = models.CharField(max_length=10, choices=PAYMENT_TYPE_CHOICES)
+    visible = models.BooleanField(default=True)
 
     class Meta:
         unique_together = ('user', 'payment_method_name')

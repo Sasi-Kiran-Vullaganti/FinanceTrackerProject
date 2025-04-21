@@ -4,21 +4,21 @@ from .models import Category, Subcategory, PaymentMethod, Transaction, Refund, P
 # Category Admin
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ("category_id", "category_name", "user")
+    list_display = ("category_id", "category_name","visible", "user")
     search_fields = ("name", "user__username")
 
 # Subcategory Admin
 @admin.register(Subcategory)
 class SubcategoryAdmin(admin.ModelAdmin):
-    list_display = ("subcategory_id", "subcategory_name", "category")
-    list_filter = ("category",)
+    list_display = ("subcategory_id", "subcategory_name","visible", "category")
+    list_filter = ("category","visible")
     search_fields = ("name",)
 
 # Payment Method Admin
 @admin.register(PaymentMethod)
 class PaymentMethodAdmin(admin.ModelAdmin):
-    list_display = ("payment_method_id", "payment_method_name", "payment_type")
-    list_filter = ("payment_type",)
+    list_display = ("payment_method_id", "payment_method_name","visible", "payment_type")
+    list_filter = ("payment_type","visible")
     search_fields = ("name",)
 
 # Transaction Admin

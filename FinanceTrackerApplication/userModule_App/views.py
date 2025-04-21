@@ -19,6 +19,18 @@ def generate_unique_userid():
         if not UserProfile.objects.filter(userid=userid).exists():
             return userid
 
+def UserProfileView(request):
+    logincheck = checkLoginStatus(request)
+    if logincheck:
+        return redirect('userLogin')
+    return render(request,'UserProfile.html')
+
+def ChangePassword(request):
+    logincheck = checkLoginStatus(request)
+    if logincheck:
+        return redirect('userLogin')
+    return render(request,'ChangePassword.html')
+
 # Create your views here.
 def userLogin(request):
     logincheck = checkLoginStatus(request)
@@ -35,6 +47,10 @@ def userLogin(request):
         try:
             user = UserProfile.objects.get(email=email)  
             if check_password(password, user.password):  
+
+                user.last_login = now()
+                user.save(update_fields=["last_login"])
+
                 request.session["is_authenticated"] = True
                 request.session["user_id"] = user.userid  
                 request.session["user_name"] = user.name  
