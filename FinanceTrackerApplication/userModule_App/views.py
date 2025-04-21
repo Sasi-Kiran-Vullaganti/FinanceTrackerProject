@@ -1,4 +1,5 @@
 import random
+import re
 import string
 from django.shortcuts import render, redirect
 from django.contrib import messages
@@ -29,6 +30,41 @@ def ChangePassword(request):
     logincheck = checkLoginStatus(request)
     if logincheck:
         return redirect('userLogin')
+    if request.method == "POST":
+        old_password = request.POST.get("old_password")
+        new_password = request.POST.get("new_password")
+        confirm_password = request.POST.get("confirm_password")
+        userid = request.session.get("user_id")
+        try:
+            user = UserProfile.objects.get(userid=userid)
+        except UserProfile.DoesNotExist:
+            messages.error(request, "User not found.")
+            return redirect("ChangePassword")
+        
+        # Validate old password
+        if not check_password(old_password, user.password):
+            messages.error(request, "Old password is incorrect.")
+            return redirect("ChangePassword")
+        
+        # Check if new password matches confirm
+        if new_password != confirm_password:
+            messages.error(request, "New password and confirmation do not match.")
+            return redirect("ChangePassword")
+        
+        # Regex validation
+        password_regex = r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$"
+        if not re.match(password_regex, new_password):
+            messages.error(request, "Password must be at least 6 characters long and include one uppercase letter, one lowercase letter, one number, and one special character.")
+            return redirect("ChangePassword")
+
+        # Save new password
+        user.password = make_password(new_password)
+        user.last_updated = now()
+        user.save()
+
+        messages.success(request, "Password changed successfully.")
+        return redirect("userDashboard")
+
     return render(request,'ChangePassword.html')
 
 # Create your views here.
