@@ -59,7 +59,17 @@
                             {% endif %}
                         </td>
                         <td>
-                            <button class="btn primary-btn" >Received</button>
+                            <button class="btn primary-btn mark-received-btn" 
+                                    data-bs-toggle="modal" 
+                                    data-bs-target="#receivedModal"
+                                    data-refundid="{{ refund.refundid }}"
+                                    data-title="{{ refund.title }}"
+                                    data-amount="{{ refund.amount }}"
+                                    data-date="{{ refund.refund_date }}"
+                                    {% if refund.refunded %}disabled{% endif %}>
+                                Received
+                            </button>
+
                         </td>
                         <td>
                             <a href="{% url 'TransactionDetails' refund.transaction.txnid %}" title="View Details">
@@ -75,12 +85,58 @@
         </div>
     </div>
 </div>
-
+<!-- Refund Received Modal -->
+<div class="modal fade" id="receivedModal" tabindex="-1" aria-labelledby="receivedModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <form method="POST" action="{% url 'mark_refund_received' %}">
+        {% csrf_token %}
+        <input type="hidden" name="refundid" id="refundIdInput">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="receivedModalLabel">Mark Refund as Received</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <p><strong>Title:</strong> <span id="refundTitle"></span></p>
+            <p><strong>Amount:</strong> ₹<span id="refundAmount"></span></p>
+            <p><strong>Refund Date:</strong> <span id="refundDate"></span></p>
+            <p>Are you sure you received this refund?</p>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Yes, Mark Received</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  
 {% endblock %}
 
 {% block extra_js %}
 <script>
     console.log('Dashboard scripts added');
+    document.addEventListener('DOMContentLoaded', function () {
+    const receivedButtons = document.querySelectorAll('.mark-received-btn');
+    const titleSpan = document.getElementById('refundTitle');
+    const amountSpan = document.getElementById('refundAmount');
+    const dateSpan = document.getElementById('refundDate');
+    const refundIdInput = document.getElementById('refundIdInput');
+
+    receivedButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const refundId = button.getAttribute('data-refundid');
+            const title = button.getAttribute('data-title');
+            const amount = button.getAttribute('data-amount');
+            const date = button.getAttribute('data-date');
+
+            titleSpan.textContent = title;
+            amountSpan.textContent = amount;
+            dateSpan.textContent = date;
+            refundIdInput.value = refundId;
+        });
+    });
+});
 
     function payNow(paylaterId) {
         // Implement the payment logic here

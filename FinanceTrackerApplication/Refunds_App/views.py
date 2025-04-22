@@ -1,7 +1,10 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,get_object_or_404
 from userModule_App.userValidations import checkLoginStatus 
 from Transactions_App.models import Refund
 from userModule_App.views import getUserData
+from django.views.decorators.http import require_POST
+from Transactions_App.models import Transaction,Refund,PayLater,Category,Subcategory,PaymentMethod
+from django.utils.timezone import now
 
 # Create your views here.
 def refundsDashboard(request):
@@ -18,3 +21,32 @@ def refundsDashboard(request):
         'refunds': refunds,
     }
     return render(request,'RefundsDashboard.html',context)
+
+@require_POST
+def mark_refund_received(request):
+    refundid = request.POST.get("refundid")
+    refund = get_object_or_404(Refund, refundid=refundid)
+
+    if not refund.refunded:
+        # Mark refund as received
+        refund.refunded = True
+        refund.save()
+
+        # Create a new income transaction
+        original_txn = refund.transaction
+        income_txn = Transaction.objects.create(
+            name=f"Refund: {refund.title}",
+            amount=refund.amount,
+            type="income",
+            notes=f"Refund received for transaction: {original_txn.name if original_txn else 'Unknown'}",
+            txn_date=now().date(),
+            status=True,  # Optional: mark as successful
+            user=original_txn.user if original_txn else request.user.profile,  # fallback to request user
+            category=original_txn.category if original_txn else None,
+            subcategory=original_txn.subcategory if original_txn else None,
+            payment_method=original_txn.payment_method if original_txn else None,
+            expense_type="refunded",  # Refund received is not an expense
+            refund=refund  # Link back to Refund
+        )
+
+    return redirect("refundsDashboard")

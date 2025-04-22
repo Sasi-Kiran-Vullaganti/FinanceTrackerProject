@@ -56,6 +56,7 @@ class Transaction(models.Model):
         ("normal", "Normal"),
         ("refund", "Refund"),
         ("paylater", "Pay Later"),
+        ("refunded","Refunded"),
     ]
 
     txnid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
