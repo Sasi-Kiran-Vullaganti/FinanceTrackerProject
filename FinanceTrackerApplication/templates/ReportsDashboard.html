@@ -4,6 +4,26 @@
 
 {% block extra_css %}
 <style>
+.details-container {
+  border: 2px solid var(--primary-color);
+  background-color: white;
+  border-radius: 8px;
+}
+.detail-header {
+    font-size: 14px;
+    font-weight: 600;
+    margin: 6px;
+    color: var(--primary-color);
+}
+.option-div{
+  background: #f4f1fd;
+  padding: 12px;
+  border-radius: 8px;
+}
+.form-check-input:checked{
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+}
 </style>
 {% endblock %}
 
@@ -12,11 +32,11 @@
 <div class="container mt-3 details-container">
     <div class="row p-3" style="color: var(--primary-color);">
         <div class="col-12">
-            <h3>Reports Dashboard</h3>
+            <h1>Reports Dashboard</h1>
         </div><hr>
         <div class="fieldsBlock row" style="color: black;">
             <div class="col-md-6">
-                Select Transaction Type
+              <span class="detail-header">Select Transaction Type</span>
                 <div class="d-flex gap-3 align-items-center mt-3">
                     <div class="form-check form-check-inline">
                       <input class="form-check-input" type="radio" name="transactionType" id="all" value="all" checked>
@@ -33,8 +53,8 @@
                   </div>
                   
             </div>
-            <div class="col-md-6 mt-3">
-                Select Transaction Date Range
+            <div class="col-md-6">
+              <span class="detail-header">Select Transaction Date Range</span>
                 <div class="d-flex gap-3 align-items-center mt-3">
                     <div class="form-check form-check-inline">
                       <input class="form-check-input" type="radio" name="filter" id="thisMonth" value="thisMonth" checked>
@@ -54,7 +74,129 @@
                     </div>
                   </div>
             </div>
-            
+            <div class="col-md-6 mt-3">
+              <span class="detail-header">Categories</span>
+              <div class="d-flex gap-3 align-items-center mt-3">
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="cat" id="allCategories" value="All" checked>
+                  <label class="form-check-label" for="allCategories">All</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="cat" id="specificCategories" value="Specific">
+                  <label class="form-check-label" for="specificCategories">Specific</label>
+                </div>
+              </div>
+              <div class="col-9 d-flex gap-3 align-items-center mt-3 option-div">
+                <div class="row g-3">
+                  <div class="col-6 d-flex align-items-center">
+                    <input class="form-check-input me-2" type="checkbox" id="checkDefault">
+                    <label class="form-check-label" for="checkDefault">Mode1</label>
+                  </div>
+                  <div class="col-6 d-flex align-items-center">
+                    <input class="form-check-input me-2" type="checkbox" id="checkChecked1" checked>
+                    <label class="form-check-label" for="checkChecked1">Mode2</label>
+                  </div>
+                  <div class="col-6 d-flex align-items-center">
+                    <input class="form-check-input me-2" type="checkbox" id="checkChecked2" checked>
+                    <label class="form-check-label" for="checkChecked2">Mode3</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 mt-3">
+              <span class="detail-header">Sub-Categories</span>
+              <div class="d-flex gap-3 align-items-center mt-3">
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="sub-cat" id="all-subCat" value="All" checked>
+                  <label class="form-check-label" for="all-subCat">All</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="sub-cat" id="specific-subCat" value="Specific">
+                  <label class="form-check-label" for="specific-subCat">Specific</label>
+                </div>
+              </div>
+              <div class="col-9 d-flex gap-3 align-items-center mt-3 option-div">
+                <div class="row g-3">
+                  <div class="col-6 d-flex align-items-center">
+                    <input class="form-check-input me-2" type="checkbox" id="checkDefault">
+                    <label class="form-check-label" for="checkDefault">Mode1</label>
+                  </div>
+                  <div class="col-6 d-flex align-items-center">
+                    <input class="form-check-input me-2" type="checkbox" id="checkChecked1" checked>
+                    <label class="form-check-label" for="checkChecked1">Mode2</label>
+                  </div>
+                  <div class="col-6 d-flex align-items-center">
+                    <input class="form-check-input me-2" type="checkbox" id="checkChecked2" checked>
+                    <label class="form-check-label" for="checkChecked2">Mode3</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 mt-3">
+              <span class="detail-header">Payment Methods</span>
+              <div class="d-flex gap-3 align-items-center mt-3">
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="paymode" id="all-Paymode" value="All" checked>
+                  <label class="form-check-label" for="all-Paymode">All</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="paymode" id="specific-Paymode" value="Specific">
+                  <label class="form-check-label" for="specific-Paymode">Specific</label>
+                </div>
+              </div>
+              <div class="col-9 d-flex gap-3 align-items-center mt-3 option-div">
+                <div class="row g-3">
+                  <div class="col-6 d-flex align-items-center">
+                    <input class="form-check-input me-2" type="checkbox" id="checkDefault">
+                    <label class="form-check-label" for="checkDefault">Mode1</label>
+                  </div>
+                  <div class="col-6 d-flex align-items-center">
+                    <input class="form-check-input me-2" type="checkbox" id="checkChecked1" checked>
+                    <label class="form-check-label" for="checkChecked1">Mode2</label>
+                  </div>
+                  <div class="col-6 d-flex align-items-center">
+                    <input class="form-check-input me-2" type="checkbox" id="checkChecked2" checked>
+                    <label class="form-check-label" for="checkChecked2">Mode3</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 mt-3">
+              <span class="detail-header">Refunds</span>
+              <div class="d-flex gap-3 align-items-center mt-3">
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="refund" id="all-refunds" value="All" checked>
+                  <label class="form-check-label" for="all-refunds">All</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="refund" id="pending-refunds" value="Pending">
+                  <label class="form-check-label" for="pending-refunds">Pending</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="refund" id="completed-refunds" value="Completed">
+                  <label class="form-check-label" for="completed-refunds">Completed</label>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 mt-3">
+              <span class="detail-header">PayLater</span>
+              <div class="d-flex gap-3 align-items-center mt-3">
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="payLater" id="all-payLater" value="All" checked>
+                  <label class="form-check-label" for="all-payLater">All</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="payLater" id="paid" value="paid">
+                  <label class="form-check-label" for="paid">Paid</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="payLater" id="notPaid" value="notPaid">
+                  <label class="form-check-label" for="notpaid">Not Paid</label>
+                </div>
+              </div>
+            </div>
+            <span class="mt-3"> <b>Note:</b> Report will be downloaded in PDF format.</span>
+            <button class="btn primary-btn w-auto m-auto"><i class="bi bi-download me-2"></i>Download Report</button>
             
         </div>
     </div>

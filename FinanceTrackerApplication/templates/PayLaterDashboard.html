@@ -66,7 +66,7 @@
                                 {% endif %}
                             </td>
                             <td>
-                                <a href="{% url 'TransactionDetails' paylater.transaction.txnid %}" title="View Details">
+                                <a href="{% url 'TransactionDetails' paylater.transaction.txnid %}" title="View Details" class="btn btn-sm primary-outline-btn">
                                     <div class="d-flex justify-content-center">
                                         <i class="bi bi-eye-fill"></i>
                                     </div>
@@ -94,8 +94,8 @@
           <input type="hidden" id="payLaterId">
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-success" onclick="payLaterConfirm()">Pay</button>
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn primary-btn" onclick="payLaterConfirm()">Pay</button>
+          <button type="button" class="btn primary-outline-btn" data-bs-dismiss="modal">Cancel</button>
         </div>
       </div>
     </div>

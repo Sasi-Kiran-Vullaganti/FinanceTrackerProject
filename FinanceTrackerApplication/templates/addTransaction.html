@@ -9,14 +9,6 @@
     font-weight: 600;
     color: black;
 }
-a{
-    color: rgb(159, 5, 248);
-    text-decoration: underline;
-}
-.form-check-input:checked {
-    background-color: #000000;
-    border-color: #151515;
-}
 </style>
 {% endblock %}
 
@@ -24,7 +16,7 @@ a{
 
 
 <div class="container">
-    <h2 class="mainHeader mt-3">Add new transaction</h2>
+    <h1 class="mt-3">Add new transaction</h1>
     <form action="addTransaction" method="post" class="container">
         {% csrf_token %}
         <div class="row g-3 align-items-center mt-3">
@@ -212,7 +204,7 @@ a{
         <div class="row mt-3">
             <!-- Submit Button -->
             <div class="col-md-2">
-                <button type="submit" class="btn btn-dark w-100">Submit Transaction</button>
+                <button type="submit" class="btn primary-btn w-100">Submit Transaction</button>
             </div>
         </div>
     </form>
@@ -223,7 +215,9 @@ a{
       <div class="modal-content">
         <div class="modal-header">
           <h1 class="modal-title fs-5">Add New Category</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
         </div>
         <div class="modal-body">
             <form id="addCategoryForm">
@@ -234,7 +228,7 @@ a{
                   <input type="text" class="form-control" id="newCategoryName" name="newCategoryName" aria-describedby="emailHelp">
                   <small id="newCategoryError" class="text-danger" style="display:none;"></small>
                 </div>
-                <button type="button" class="btn btn-dark" id="submitCategory">Submit</button>
+                <button type="button" class="btn primary-btn" id="submitCategory">Submit</button>
               </form>
         </div>
       </div>
@@ -247,7 +241,9 @@ a{
       <div class="modal-content">
         <div class="modal-header">
           <h1 class="modal-title fs-5">Add New Sub Category</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
         </div>
         <div class="modal-body">
             <form id="addSubCategoryForm">
@@ -260,7 +256,7 @@ a{
                   <input type="text" class="form-control" id="newSubCategoryName" name="newSubCategoryName">
                   <small id="newSubCategoryError" class="text-danger" style="display:none;"></small>
                 </div>
-                <button type="button" class="btn btn-dark" id="submitSubCategory">Submit</button>
+                <button type="button" class="btn primary-btn" id="submitSubCategory">Submit</button>
               </form>
         </div>
       </div>
@@ -273,7 +269,9 @@ a{
         <div class="modal-content">
             <div class="modal-header">
               <h1 class="modal-title fs-5">Add New Payment Method</h1>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
             </div>
             <div class="modal-body">
                 <form id="addPaymentMethodForm">
@@ -286,7 +284,7 @@ a{
                       <input type="text" class="form-control" id="newPaymentMethodName" name="newPaymentMethodName" aria-describedby="emailHelp">
                       <div id="newPaymentMethodError" class="form-text text-danger">Paymnt Method already exists</div>
                     </div>
-                    <button type="button" class="btn btn-dark" id="submitPaymentMethod">Submit</button>
+                    <button type="button" class="btn primary-btn" id="submitPaymentMethod">Submit</button>
                   </form>
             </div>
           </div>
