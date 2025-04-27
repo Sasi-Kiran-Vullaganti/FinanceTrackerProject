@@ -1,19 +1,19 @@
 {% extends 'base.html' %}
 
-{% block title %}Login{% endblock %}
+{% block title %}Dashboard{% endblock %}
 
 {% block extra_css %}
 <style>
-    .btn{
-        margin:6px auto;
+    .btn {
+        margin: 6px auto;
     }
-    .close{
+    .close {
         color: var(--primary-color);
         background: none;
         border: 1px solid;
     }
-    .modal-title{
-        color:var(--primary-color);
+    .modal-title {
+        color: var(--primary-color);
         font-size: 18px;
         font-weight: 600;
     }
@@ -22,45 +22,55 @@
 
 {% block content %}
 <div class="container-fluid mt-3">
-    <div class="button-container">
-        <span class="btn primary-btn">This Month</span>
-        <span class="btn primary-outline-btn">Last 15 Days</span>
-        <span class="btn primary-outline-btn">Last week</span>
-        <span class="btn primary-outline-btn">Last 45 Days</span>
-        <span class="btn primary-outline-btn">Last 3 months</span>
-        <span class="btn primary-outline-btn">Last 6 months</span>
-        <span class="btn primary-outline-btn">Last year</span>
-        <button type="button" class= "btn primary-outline-btn" data-toggle="modal" data-target="#dateModal">Select Date <i class="bi bi-calendar3"></i> </button>
+    <div class="button-container" id="filterButtons">
+        <a href="{% url 'userDashboard' %}?filter=this_month" class="btn primary-outline-btn">This Month</a>
+        <a href="{% url 'userDashboard' %}?filter=last_15_days" class="btn primary-outline-btn">Last 15 Days</a>
+        <a href="{% url 'userDashboard' %}?filter=last_week" class="btn primary-outline-btn">Last Week</a>
+        <a href="{% url 'userDashboard' %}?filter=last_45_days" class="btn primary-outline-btn">Last 45 Days</a>
+        <a href="{% url 'userDashboard' %}?filter=last_3_months" class="btn primary-outline-btn">Last 3 Months</a>
+        <a href="{% url 'userDashboard' %}?filter=last_6_months" class="btn primary-outline-btn">Last 6 Months</a>
+        <a href="{% url 'userDashboard' %}?filter=last_year" class="btn primary-outline-btn">Last Year</a>
+    
+        <button type="button" class="btn primary-outline-btn" data-bs-toggle="modal" data-bs-target="#dateModal">
+            Select Date <i class="bi bi-calendar3"></i>
+        </button>
+    </div>  
+    
+    <div class="row mt-3">
+        <div class="col-md-3">
+            <h3 class="mx-5">Spendings Chart</h3>
+            <canvas id="pieChart"></canvas>
+        </div>
     </div>
-    <!-- select Custom Date Modal -->
+    
+    <!-- Select Custom Date Modal -->
     <div class="modal fade" id="dateModal" tabindex="-1" role="dialog" aria-labelledby="dateModal" aria-hidden="true">
         <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Select Date</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-            </div>
-            <div class="modal-body">
-                <div class="form-group row align-items-center">
-                    <label for="dateInput" class="col-md-3 col-form-label">Start Date : </label>
-                    <div class="col-md-9">
-                      <input type="date" class="form-control" id="dateInput" name="date">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Select Date</h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group row align-items-center">
+                        <label for="startDateInput" class="col-md-3 col-form-label">Start Date : </label>
+                        <div class="col-md-9">
+                            <input type="date" class="form-control" id="startDateInput" name="start_date" value="{{ request.GET.start_date }}">
+                        </div>
+                    </div>
+                    <div class="form-group row align-items-center mt-3">
+                        <label for="endDateInput" class="col-md-3 col-form-label">End Date : </label>
+                        <div class="col-md-9">
+                            <input type="date" class="form-control" id="endDateInput" name="end_date" value="{{ request.GET.end_date }}">
+                        </div>
                     </div>
                 </div>
-                <div class="form-group row align-items-center mt-3">
-                    <label for="dateInput" class="col-md-3 col-form-label">End Date : </label>
-                    <div class="col-md-9">
-                      <input type="date" class="form-control" id="dateInput" name="date">
-                    </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn primary-btn ms-0" id="applyDateFilter">Apply changes</button>
                 </div>
-                  
             </div>
-            <div class="modal-footer">
-            <button type="button" class="btn primary-btn ms-0">Apply changes</button>
-            </div>
-        </div>
         </div>
     </div>
 </div>
@@ -68,6 +78,93 @@
 
 {% block extra_js %}
 <script>
-    console.log('Dashboard scripts added')
+    document.addEventListener('DOMContentLoaded', function() {
+        const incomeAmt = Number('{{ incomeAmt|default:0 }}');
+        const expenseAmt = Number('{{ expenseAmt|default:0 }}');
+        const refundAmt = Number('{{ refundAmt|default:0 }}');
+        const paylaterAmt = Number('{{ paylaterAmt|default:0 }}');
+        
+        // Now safe to use
+        console.log(incomeAmt, expenseAmt, refundAmt, paylaterAmt);
+    
+        const data = {
+            labels: ['Income', 'Expense', 'Refunds', 'Pay Later'],
+            datasets: [{
+                data: [incomeAmt, expenseAmt, refundAmt, paylaterAmt],
+                backgroundColor: ['#28a745', '#dc3545', '#17a2b8', '#ffc107'],
+                hoverBackgroundColor: ['#218838', '#c82333', '#138496', '#e0a800'],
+            }]
+        };
+    
+        const ctx = document.getElementById('pieChart').getContext('2d');
+        const pieChart = new Chart(ctx, {
+            type: 'pie',
+            data: data,
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(tooltipItem) {
+                                const value = tooltipItem.raw;
+                                return tooltipItem.label + ': ' + value.toLocaleString();
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    });
+    </script>
+    
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const buttonContainer = document.getElementById('filterButtons');
+        const buttons = buttonContainer.querySelectorAll('.btn');
+        const selectDateButton = buttonContainer.querySelector('button[data-bs-target="#dateModal"]'); // Select Date Button
+
+        // Handle highlighting based on current filter
+        const urlParams = new URLSearchParams(window.location.search);
+        const currentFilter = urlParams.get('filter') || 'this_month';
+
+        // First reset all buttons to outline
+        buttons.forEach(btn => {
+            btn.classList.remove('primary-btn');
+            btn.classList.add('primary-outline-btn');
+        });
+
+        if (currentFilter === 'custom') {
+            // If custom selected, highlight the "Select Date" button
+            selectDateButton.classList.remove('primary-outline-btn');
+            selectDateButton.classList.add('primary-btn');
+        } else {
+            // Otherwise highlight the clicked link button
+            buttons.forEach(button => {
+                const buttonHref = button.getAttribute('href');
+                if (buttonHref && buttonHref.includes(currentFilter)) {
+                    button.classList.remove('primary-outline-btn');
+                    button.classList.add('primary-btn');
+                }
+            });
+        }
+
+        // Handle Apply Date Changes
+        const applyBtn = document.getElementById('applyDateFilter');
+        applyBtn.addEventListener('click', function() {
+            const startDate = document.getElementById('startDateInput').value;
+            const endDate = document.getElementById('endDateInput').value;
+
+            if (!startDate || !endDate) {
+                alert("Please select both Start Date and End Date.");
+                return;
+            }
+
+            const newUrl = `{% url 'userDashboard' %}?filter=custom&start_date=${startDate}&end_date=${endDate}`;
+            window.location.href = newUrl;
+        });
+    });
 </script>
 {% endblock %}
