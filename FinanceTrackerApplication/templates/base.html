@@ -45,7 +45,7 @@
               </li>
               <li class="nav-item">
                 <a class="nav-link {% if request.resolver_match.url_name == 'refundsDashboard' %}active{% endif %}"
-                   aria-current="page" href="{% url 'refundsDashboard' %}">Refunds</a>
+                   aria-current="page" href="{% url 'refundsDashboard' %}?filter=all">Refunds</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link {% if request.resolver_match.url_name == 'payLaterDashboard' %}active{% endif %}"

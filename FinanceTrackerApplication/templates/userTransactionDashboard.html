@@ -69,17 +69,23 @@
                         <th>Total Income</th>
                         <th>Total Expense</th>
                         <th>Total Refund</th>
+                        <th>Pending Refund</th>
                         <th>Total Paylater</th>
                         <th>Avaliable Balance</th>
+                        <th>Final Balance</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <td><span class="text-success fw-bold">{{ incomeAmt }}</span></td>
                         <td><span class="text-danger fw-bold">{{ expenseAmt }}</span></td>
-                        <td><span class="text-info fw-bold">{{ refundAmt }}</span></td>
+                        <td><a href="{% url 'refundsDashboard' %}?filter=refunded"><span class="text-info fw-bold">{{ refundAmt }}</span></a></td>
+                        <td>
+                            <a href="{% url 'refundsDashboard' %}?filter=pendingrefunds"><span class="text-info fw-bold">{{ pendingRefundAmt }}</span></a>
+                        </td>
                         <td><span class="text-warning fw-bold">{{ paylaterAmt }}</span></td>
                         <td class="text-bg-success"><span class="fw-bold">{{ balanceAmt }}</span></td>
+                        <td class="text-bg-success"><span class="fw-bold">{{ finalBalanceAmt }}</span></td>
                     </tr>
                 </tbody>
             </table>
@@ -104,8 +110,8 @@
                 {% for txn in transactions %}
                     <tr class="">
                         <td>{{ txn.name }}</td>
-                        <td class="{% if txn.type == 'income' %}text-success{% elif txn.type == 'expense' %}text-danger{% endif %}">
-                            {% if txn.type == 'income' %}+ {{ txn.amount }}{% elif txn.type == 'expense' %}- {{ txn.amount }}{% endif %}
+                        <td class="{% if txn.type == 'income' %}text-success{% elif txn.type == 'expense' %}text-danger{% else %}text-warning{% endif %}">
+                            {% if txn.type == 'income' %}+ {{ txn.amount }}{% elif txn.type == 'expense' %}- {{ txn.amount }}{% else %}+ {{ txn.amount }}{% endif %}
                         </td>
                         <td>{{ txn.type|title }}</td>
                         <td>

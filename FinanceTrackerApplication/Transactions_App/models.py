@@ -50,13 +50,13 @@ class Transaction(models.Model):
     TRANSACTION_TYPE_CHOICES = [
         ("income", "Income"),
         ("expense", "Expense"),
+        ("refunded","Refunded"),
     ]
 
     EXPENSE_TYPE_CHOICES = [
         ("normal", "Normal"),
         ("refund", "Refund"),
         ("paylater", "Pay Later"),
-        ("refunded","Refunded"),
     ]
 
     txnid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)

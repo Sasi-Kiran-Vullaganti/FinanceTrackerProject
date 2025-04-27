@@ -12,59 +12,73 @@ def transactionDashboard(request):
     logincheck = checkLoginStatus(request)
     if logincheck:
         return redirect('userLogin')
+
     userid = request.session.get("user_id")
     user = getUserData(userid)
+
+    # Filter: all transactions except paylater expenses
     transactions = (
-        Transaction.objects.filter(user=user,status=True)
+        Transaction.objects.filter(user=user, status=True)
+        .exclude(expense_type='paylater')  # Exclude paylater transactions
         .select_related(
-            'category', 
-            'subcategory', 
-            'payment_method', 
-            'refund', 
+            'category',
+            'subcategory',
+            'payment_method',
+            'refund',
             'paylater'
         )
-        .order_by('-txn_date', '-added_on')  # Latest first
+        .order_by('-txn_date', '-added_on')
     )
+
     incomeAmt = 0
     expenseAmt = 0
     refundAmt = 0
-    paylaterAmt = 0
-    for i in transactions:
-        if i.type == "income":
-            incomeAmt = incomeAmt + int(i.amount)
-        else:
-            if i.expense_type == 'normal':
-                expenseAmt = expenseAmt + int(i.amount)
-            elif i.expense_type == 'refund':
-                refundAmt = refundAmt + int(i.amount)
-            elif i.expense_type == 'paylater':
-                paylaterAmt = paylaterAmt + int(i.amount)
+    pendingRefundAmt = 0
 
-
-
-    refunds = (
-        Refund.objects.filter(transaction__user=user)
-        .select_related('transaction')
-    )
-
+    # Loop through the filtered transactions
+    for txn in transactions:
+        if txn.type == "income":
+            incomeAmt += int(txn.amount)
+        elif txn.type == 'refunded':
+            refundAmt += int(txn.amount)
+        elif txn.type == 'expense':
+            if txn.expense_type in ['normal', 'refund']:
+                expenseAmt += int(txn.amount)
+    
+    # ✅ Fetch paylater transactions separately
     paylaters = (
         PayLater.objects.filter(transaction__user=user)
         .select_related('transaction')
     )
 
-    balance_amt = incomeAmt - expenseAmt - refundAmt - paylaterAmt
+    paylaterAmt = sum(int(pl.amount) for pl in paylaters)
+
+    # ✅ Fetch pending refunds separately
+    pending_refunds = (
+        Refund.objects.filter(transaction__user=user, refunded=False)
+    )
+
+    pendingRefundAmt = sum(int(ref.amount) for ref in pending_refunds)
+
+    # ✅ Balance calculations
+    balance_amt = incomeAmt - expenseAmt + refundAmt - paylaterAmt
+
+    final_balance_amt = balance_amt + pendingRefundAmt - paylaterAmt
 
     context = {
         'transactions': transactions,
-        'refunds': refunds,
         'paylaters': paylaters,
-        'incomeAmt' : incomeAmt,
-        'expenseAmt' : expenseAmt,
-        'refundAmt' : refundAmt,
-        'paylaterAmt' : paylaterAmt,
-        'balanceAmt' : balance_amt
+        'incomeAmt': incomeAmt,
+        'expenseAmt': expenseAmt,
+        'refundAmt': refundAmt,
+        'paylaterAmt': paylaterAmt,
+        'balanceAmt': balance_amt,
+        'pendingRefundAmt': pendingRefundAmt,  # ✅ Added pending refund amount
+        'finalBalanceAmt': final_balance_amt,  # ✅ Final balance if needed
     }
-    return render(request,'userTransactionDashboard.html',context)
+
+    return render(request, 'userTransactionDashboard.html', context)
+
 
 def addTransaction(request):
     logincheck = checkLoginStatus(request)
