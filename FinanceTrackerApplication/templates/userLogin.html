@@ -4,28 +4,9 @@
 
 {% block extra_css %}
 <style>
-    .titleHeading1{
-        font-size: 36px;
-        font-weight: bold;
-    }
-    .subHeading1{
-        font-size: 18px;
-        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    }
-    .img-div{
-        display: flex;
-        justify-content: center;
-    }
-    .img-div img{
-        max-width: 75%;
-        height: auto;
-    }
-    .w-90{
-        width: 90%;
-    }
     .button-container {
-    display: flex;
-    gap: 10px;
+        display: flex;
+        gap: 10px;
     }
     .button-container button {
         white-space: nowrap;
@@ -45,11 +26,11 @@
 <div class="container mb-3">
     <div class="row justify-content-center mt-3">
         <div class="col-md-6 img-div">
-            <img src="https://img.freepik.com/free-vector/mobile-login-concept-illustration_114360-83.jpg?t=st=1743057531~exp=1743061131~hmac=5c4d9aa0f1e2564d48a7a660b95f4e3261398b93a0d8eea652316feeaf6d4b70&w=1380"
-             alt="UserLogin">
+            <img src="https://img.freepik.com/free-vector/login-concept-illustration_114360-739.jpg?t=st=1745755383~exp=1745758983~hmac=a69f868476f1333a97edb37fc28aef385504901d0429c79fb7e898cf07082e27&w=1380"
+            class="img" alt="userLogin">
         </div>
         <div class="col-md-6 d-flex align-items-center justify-content-center">
-            <div class="w-90">
+            <div>
                 <p class="titleHeading1">Know Where Your Money Goes, Take Charge Today!</p>
                 <p class="subHeading1">Welcome back! Please login to your account.</p>
                 <form action="{% url 'userLogin' %}" method="post">
