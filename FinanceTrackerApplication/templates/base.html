@@ -23,7 +23,136 @@
 
 
 
-    {% block extra_css %}{% endblock %}
+    <style>
+      /* ===== BASE STYLES ===== */
+  :root {
+      --primary-color: #0c240b;
+      --secondary-color: #fff;
+      --danger-color: #e74a3b;
+      --warning-color: #f6c23e;
+      --text-color: #174923;
+      --light-color: #f4f6f8;
+      --dark-color: #343a40;
+      --gray-color: #858796;
+      --brand-color: #ffd966;
+      --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+      
+  body {
+      margin: 0;
+      padding: 0;
+      font-family: var(--font-main);
+      background-color: var(--light-color);
+      color: var(--dark-color);
+  }
+  
+  a{
+      color: var(--primary-color);
+      text-decoration: none;
+  }
+  .mb-6{
+      margin-bottom: 60px;
+  }
+  
+      /* Navbar styles */
+  
+  .navbar-brand{
+      font-family: 'Manrope', 'Inter', 'Segoe UI', sans-serif;
+      font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+      font-weight: 800;
+      color: var(--brand-color) !important;
+      letter-spacing: 0.5px;
+  }
+  .navbarStyle{
+      background-color: var(--primary-color);
+  }
+  .nav-link{
+      color: var(--light-color);
+      letter-spacing: 0.5px;
+  }
+  .active{
+      text-decoration: underline;
+      text-underline-offset: 6px; 
+      color: var(--brand-color) !important;
+  }
+  .nav-link:hover{
+      color: var(--brand-color) !important;
+      font-weight: 500;
+  }
+  
+  
+      /* ButtonStyles */
+  .primary-btn, .primary-btn:hover{
+      color: var(--light-color);
+      background-color:var(--primary-color);
+  }
+  
+  .primary-outline-btn, .primary-outline-btn:hover{
+      background-color: var(--light-color);
+      color:var(--primary-color);
+      border:1px solid var(--primary-color); 
+  }
+  
+  .teritiary-btn, .teritiary-btn:hover{
+      background-color: var(--light-color);
+      color:var(--primary-color);
+  }
+  
+  .button-container{
+      gap:16px;
+  }
+  
+      /* Headings */
+  .page-header{
+      font-size: 24px;
+      font-weight: 700;
+  }
+  .section-header{
+      font-size: 18px;
+      font-weight: 800;
+  }
+  .col-header{
+      font-size: 18px;
+      font-weight: 700;
+      padding-left: 0px;
+  }
+  .detail-header{
+      font-size: 14px;
+      font-weight: 600;
+  }
+  .detail-value{
+      font-size: 14px;
+      font-weight: 500;
+  }
+  .details-container{
+      border: 2px solid var(--primary-color);
+      border-radius: 8px;
+      padding: 12px;
+  }
+  .details-row{
+      background: #edf5eb;
+      padding: 12px;
+      border-radius: 8px;
+  }
+  .details-set{
+      display: flex;
+      flex-direction: column;
+      padding: 12px;
+  }
+  .form-check-input:checked {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+  }
+
+  .change-password-container {
+    max-width: 500px;
+    margin: 50px auto;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 10px 10px 5px var(--primary-color);
+    background-color: #ffffff;
+  }
+  </style>
 </head>
 <body>
     

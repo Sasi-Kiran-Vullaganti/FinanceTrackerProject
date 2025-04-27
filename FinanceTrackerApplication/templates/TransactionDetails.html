@@ -4,55 +4,6 @@
 
 {% block content %}
 
-<style>
-    :root {
-    --primary-color: #6c5ce7;
-    --secondary-color: #f4f6f8;
-    --danger-color: #e74a3b;
-    --warning-color: #f6c23e;
-    --light-color: #f4f6f8;
-    --dark-color: #343a40;
-    --gray-color: #858796;
-    --brand-color: #ffd966;
-    --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  }
-    .mainHeader{
-        font-size:20px;
-        font-weight: 600;
-        color: black;
-    }
-    .page-header{
-        color:var(--primary-color);
-        font-size: 20px;
-        font-weight: 800;
-    }
-    .details-container{
-        border: 2px solid var(--primary-color);
-        background-color: white;
-        border-radius: 8px;
-    }
-    .details-row{
-        background: #f4f1fd;
-        padding: 12px;
-        border-radius: 8px;
-    }
-    .details-set{
-        display: flex;
-        flex-direction: column;
-    }
-    .detail-header{
-        font-size:14px;
-        font-weight: 600;
-        margin: 6px;
-        color: var(--primary-color);
-    }
-    .detail-value{
-        font-size: 12px;
-        margin:6px;
-        font-weight: bold;
-    }
-</style>
-
 <div class="container mt-3">
     <div class="row align-items-center mb-3">
         <div class="col d-flex align-items-center">
@@ -66,7 +17,7 @@
 </div>
 <div class="container details-container mt-3 p-4" id="transaction-details-image">
     <div class="row details-row mb-3">
-        <h2  class="mainHeader">Transaction Details</h2>
+        <h2  class="col-header">Transaction Details</h2>
         <div class="col-md-3 details-set">
             <span class="detail-header">Transaction ID </span>
             <span class="detail-value">{{ transaction.txnid }}</span>
@@ -110,7 +61,7 @@
     </div>
     {% if refund_details %}
         <div class="row details-row mb-3">
-            <h2  class="mainHeader">Refund Details</h2>
+            <h2  class="col-header">Refund Details</h2>
             <div class="col-md-3 details-set">
                 <span class="detail-header">Refund ID</span>
                 <span class="detail-value">{{ refund_details.refundid }}</span>
@@ -139,7 +90,7 @@
     {% endif %}
     {% if paylater_details %}
         <div class="row details-row mb-3">
-            <h2  class="mainHeader">Pay Later Details</h2>
+            <h2  class="col-header">Pay Later Details</h2>
             <div class="col-md-3 details-set">
                 <span class="detail-header">PayLater ID</span>
                 <span class="detail-value">{{ paylater_details.paylaterid }}</span>
