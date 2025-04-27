@@ -45,10 +45,10 @@
 {% endblock %}
 
 {% block content %}
-<div class="container-fluid">
-    <div class="row dashboardSec1">
+<div class="container-fluid page">
+    <div class="dashboardSec1">
         <div class="col-12">
-            <h3>Welcome to Transactions Dashboard</h3>
+            <h3 class="page-header">Welcome to Transactions Dashboard</h3>
             <p>Track Your Refunds and Stay Informed</p>
         </div>
     </div>
@@ -57,10 +57,10 @@
     <div class="row mt-4 mb-4">
         
         <div class="col-6 mb-2">
-            <h3>Transaction Dashboard</h3>
+            <h3 class="section-header">Transaction Dashboard</h3>
         </div> 
         <div class="col-6 mx-auto" style=" text-align: end; ">
-            <a href="{% url 'addTransaction' %}" class="btn primary-btn ms-auto">+ Add New Transaction</a>
+            <a href="{% url 'addTransaction' %}" class="btn primary-btn ms-auto mb-2">+ Add New Transaction</a>
         </div>
         <div class="col-12">
             <table class="summary-table">
@@ -91,7 +91,7 @@
             </table>
         </div>
         <div class="col-12 mt-3">
-            <h3 class="mb-3">All Transactions</h3>
+            <h3 class="mb-3 section-header">All Transactions</h3>
         <table border="1" class="table table-striped mb-3">
             <thead>
                 <tr>

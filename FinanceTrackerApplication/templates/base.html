@@ -35,6 +35,7 @@
       --dark-color: #343a40;
       --gray-color: #858796;
       --brand-color: #ffd966;
+      --bg-shade: #cee4c9;
       --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   }
       
@@ -79,7 +80,10 @@
       color: var(--brand-color) !important;
       font-weight: 500;
   }
-  
+  .page{
+      background: var(--primary-color);
+      color: #fff;
+  }
   
       /* ButtonStyles */
   .primary-btn, .primary-btn:hover{
@@ -130,7 +134,7 @@
       padding: 12px;
   }
   .details-row{
-      background: #edf5eb;
+      background: var(--bg-shade);
       padding: 12px;
       border-radius: 8px;
   }
@@ -151,6 +155,21 @@
     border-radius: 15px;
     box-shadow: 10px 10px 5px var(--primary-color);
     background-color: #ffffff;
+  }
+  /* table styles */
+  tbody, td, tfoot, th, thead, tr{
+    padding: 12px;
+  }
+  .summary-table{
+    width: 100%;
+    background: var(--bg-shade);
+    border-radius: 12px;
+  }
+  /* transactionDashboard styles */
+  .dashboardSec1{
+    padding: 12px;
+    margin: auto;
+    text-align: center;
   }
   </style>
 </head>
@@ -223,7 +242,7 @@
 
 
     <footer style="position: fixed; bottom: 0; width: 100%; text-align: center; padding: 5px; background-color: var(--light-color);">
-    <p style="color: var(--primary-color); font-size: 18px; margin-bottom: 10px;">
+    <p style="color: var(--text-color); font-size: 18px; font-weight:600; margin-bottom: 10px;">
       © 2025 Finance Tracker. All Rights Reserved.
     </p>
     <div style="font-size: 18px; line-height: 2; font-weight: bold;">

@@ -4,11 +4,6 @@
 
 {% block extra_css %}
 <style>
-    .dashboardSec1 {
-        text-align: center;
-        padding-top: 40px;
-        height: 250px;
-    }
     .dashboardSec2 {
         padding: 16px;
         margin-top: -100px;
@@ -20,10 +15,10 @@
 
 {% block content %}
 
-<div class="container-fluid">
-    <div class="row dashboardSec1">
+<div class="container-fluid page">
+    <div class="dashboardSec1">
         <div class="col-12">
-            <h3>Welcome to Refunds Dashboard</h3>
+            <h3 class="page-header">Welcome to Refunds Dashboard</h3>
             <p>Track Your Refunds and Stay Informed</p>
         </div>
     </div>
@@ -31,7 +26,7 @@
 <div class="container dashboardSec2">
     <div class="row">
         <div class="col-12">
-            <h2 class="mb-3">Refund Details</h2>
+            <h2 class="section-header m-3">Refund Details</h2>
             <table border="1" class="table table-striped mt-4">
                 <thead>
                     <tr>
