@@ -193,15 +193,17 @@
             </ul>
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0 button-container">
               {% if request.session.is_authenticated %}
-              <li class="nav-item">
-                <a class="btn button teritiary-btn" href="{% url 'UserProfileUrl' %}">UserProfile</a>
-              </li>
-              <li class="nav-item">
-                <a class="btn button teritiary-btn" href="{% url 'ChangePassword' %}">Change Password</a>
-              </li>
-              <li class="nav-item">
-                <a class="btn button teritiary-btn" href="{% url 'userLogout' %}">Logout</a>
-              </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle btn button teritiary-btn" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    User Profile
+                  </a>
+                  <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                    <li><a class="dropdown-item" href="{% url 'UserProfileUrl' %}">Profile</a></li>
+                    <li><a class="dropdown-item" href="{% url 'ChangePassword' %}">Change Password</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item text-danger" href="{% url 'userLogout' %}">Logout</a></li>
+                  </ul>
+                </li>
               {% else %}
                 <li class="nav-item">
                   <a class="btn button teritiary-btn" href="{% url 'userLogin' %}">Login</a>
@@ -209,8 +211,8 @@
                 <li class="nav-item">
                   <a class="btn button teritiary-btn" href="{% url 'userRegister' %}">Register</a>
                 </li>
-                {% endif %}
-              </ul>
+              {% endif %}
+            </ul>            
           </div>
         </div>
       </nav>
